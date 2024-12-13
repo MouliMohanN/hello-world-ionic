@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import Echo from 'src/plugins/echoPlugin';
+import Security from 'src/plugins/securityPlugin';
 
 @Component({
   selector: 'app-tab1',
@@ -13,6 +14,7 @@ import Echo from 'src/plugins/echoPlugin';
 export class Tab1Page {
 
   message: string = 'Initial Value'
+  isSecure: boolean = false
 
   constructor() {}
 
@@ -22,5 +24,6 @@ export class Tab1Page {
     // const value = 'Hello World!'
     console.log('Response from native:', value);
     this.message = `${value} from Native`
+    this.isSecure = (await Security.isAppSecure()).isSecure;
   }
 }
