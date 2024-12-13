@@ -15,5 +15,9 @@
 
   <h1>{{ message }}</h1>
   <h1>App Status: {{ isSecure }}</h1>
+  <div *ngIf="title">
+    <h1>App Title: {{ title }}</h1>
+    <h1>App Message: {{ description }}</h1>
+  </div>
   <ion-button (click)="onButtonPress()">button</ion-button>
 </ion-content>

@@ -73,9 +73,14 @@ object SecurityService {
 
     fun checkAndBlockHacker(activityContext: Activity, callback: (title: String, message: String) -> Unit) {
         val type = getSecurityType(activityContext)
-        val (title, message) = getTitleAndMessageForSecurityType(type)
-        callback(title, message)
-        launchSecurityActivity(activityContext, title, message)
+        if (type == SecurityType.None) {
+          callback("", "")
+          return
+        }
+
+      val (title, message) = getTitleAndMessageForSecurityType(type)
+      callback(title, message)
+      launchSecurityActivity(activityContext, title, message)
     }
 
 }

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.R
+import kotlin.system.exitProcess
 
 class SecurityIssueActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +41,8 @@ class SecurityIssueActivity : AppCompatActivity() {
 
     private fun closeApp() {
         finishAffinity()
-        System.exit(0)
+        exitProcess(0)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 } // close app on back button press..
 
