@@ -3,10 +3,11 @@ package com.example.app.security
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.awesomeproject.security.utils.DeveloperOptions
+import com.example.app.security.utils.DeveloperOptions
 import com.awesomeproject.security.utils.Frida
-import com.awesomeproject.security.utils.Root
-import com.awesomeproject.security.utils.SystemCalls
+import com.example.app.security.utils.Emulator
+import com.example.app.security.utils.Root
+import com.example.app.security.utils.SystemCalls
 
 
 private fun isMethodHooked(
@@ -31,6 +32,7 @@ enum class SecurityType {
     SystemCalls,
     Root,
     DeveloperOptions,
+    Emulator,
     None
 }
 
@@ -41,14 +43,17 @@ object SecurityService {
         if (Frida.isDetected()) {
             return SecurityType.Frida
         }
-        if (SystemCalls.detect()) {
+        if (SystemCalls.isDetected()) {
             return SecurityType.SystemCalls
         }
-        if (Root.detect()) {
+        if (Root.isDetected()) {
             return SecurityType.Root
         }
-        if (DeveloperOptions.detect(context)) {
+        if (DeveloperOptions.isDetected(context)) {
             return SecurityType.DeveloperOptions
+        }
+        if (Emulator.isDetected(context)) {
+          return SecurityType.Emulator
         }
         return SecurityType.None
     }
@@ -59,6 +64,7 @@ object SecurityService {
             SecurityType.SystemCalls -> Pair("System calls detected", "It has the potential to inspect and manipulate the state of the app. This application is not supported.")
             SecurityType.Root -> Pair("Device is rooted", "This application is not supported on rooted device.")
             SecurityType.DeveloperOptions -> Pair("USB Debugger/developer Option is ON", "This application is not supported on USB debugging enabled device.")
+            SecurityType.Emulator -> Pair("Emulator detected", "This application is not supported on emulator.")
             SecurityType.None -> Pair("No security issues detected", "This application is not supported.")
         }
     }

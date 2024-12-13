@@ -1,10 +1,10 @@
-package com.awesomeproject.security.utils
+package com.example.app.security.utils
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 object SystemCalls {
-    fun detect(): Boolean {
+    fun isDetected(): Boolean {
         val suspiciousSysCalls = arrayOf("ptrace", "mprotect")
         for (sysCall in suspiciousSysCalls) {
             if (isSysCallUsed(sysCall)) {

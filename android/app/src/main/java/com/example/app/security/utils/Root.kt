@@ -1,4 +1,4 @@
-package com.awesomeproject.security.utils
+package com.example.app.security.utils
 
 import android.os.Build
 import java.io.BufferedReader
@@ -7,7 +7,7 @@ import java.io.InputStreamReader
 
 object Root {
 
-    fun detect(): Boolean {
+    fun isDetected(): Boolean {
         return checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
     }
 
