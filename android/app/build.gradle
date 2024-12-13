@@ -24,6 +24,11 @@ android {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+  options.fork = true
+  options.incremental = true
+}
+
 repositories {
     flatDir{
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
@@ -43,6 +48,7 @@ dependencies {
 }
 
 apply from: 'capacitor.build.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 try {
     def servicesJSON = file('google-services.json')
