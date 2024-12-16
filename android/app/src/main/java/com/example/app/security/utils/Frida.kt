@@ -1,4 +1,4 @@
-package com.awesomeproject.security.utils
+package com.example.app.security.utils
 
 import java.io.BufferedReader
 import java.io.File
