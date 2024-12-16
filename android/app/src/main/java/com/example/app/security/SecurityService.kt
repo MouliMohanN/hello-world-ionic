@@ -3,10 +3,10 @@ package com.example.app.security
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.example.app.security.utils.DeveloperOptions
-import com.awesomeproject.security.utils.Frida
 import com.example.app.security.utils.AppIntegrity
+import com.example.app.security.utils.DeveloperOptions
 import com.example.app.security.utils.Emulator
+import com.example.app.security.utils.Frida
 import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
 
@@ -42,21 +42,21 @@ enum class SecurityType {
 object SecurityService {
 
     private fun getSecurityType(context: Context): SecurityType {
-//        if (Frida.isDetected()) {
-//            return SecurityType.Frida
-//        }
-//        if (SystemCalls.isDetected()) {
-//            return SecurityType.SystemCalls
-//        }
-//        if (Root.isDetected()) {
-//            return SecurityType.Root
-//        }
-//        if (DeveloperOptions.isDetected(context)) {
-//            return SecurityType.DeveloperOptions
-//        }
-//        if (Emulator.isDetected(context)) {
-//          return SecurityType.Emulator
-//        }
+        if (Frida.isDetected()) {
+            return SecurityType.Frida
+        }
+        if (SystemCalls.isDetected()) {
+            return SecurityType.SystemCalls
+        }
+        if (Root.isDetected()) {
+            return SecurityType.Root
+        }
+        if (DeveloperOptions.isDetected(context)) {
+            return SecurityType.DeveloperOptions
+        }
+        if (Emulator.isDetected(context)) {
+          return SecurityType.Emulator
+        }
         if (AppIntegrity.isValid(context).not()) {
           return SecurityType.AppIntegrity
         }
