@@ -1,6 +1,7 @@
 package com.example.app.security.utils.hash
 
 import android.content.Context
+import com.example.app.utils.decodeToString
 import java.io.File
 import java.security.MessageDigest
 import java.util.zip.ZipFile
@@ -8,7 +9,7 @@ import java.util.zip.ZipFile
 object Manifest {
 
   fun isValid(context: Context): Boolean {
-    val buildTimeHash = "6c5ffa9b1547e932d40f13fcf2b06c767e600e6f82cf066c1a9328dcb38f541a"
+    val buildTimeHash = manifestHash.decodeToString()
     val manifestFile = extractManifestFile(context)
 
     if (manifestFile != null) {
@@ -16,7 +17,7 @@ object Manifest {
 
       println("MouliTesting - Manifest Hash: \n" +
         "CompileTime - ${buildTimeHash} \n" +
-        "RunTime - $manifestHash")
+        "RunTime - $manifestHash \n")
 
       return buildTimeHash == manifestHash
     }
