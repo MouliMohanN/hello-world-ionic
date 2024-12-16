@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.example.app.security.utils.DeveloperOptions
 import com.awesomeproject.security.utils.Frida
+import com.example.app.security.utils.AppIntegrity
 import com.example.app.security.utils.Emulator
 import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
@@ -33,6 +34,7 @@ enum class SecurityType {
     Root,
     DeveloperOptions,
     Emulator,
+    AppIntegrity,
     None
 }
 
@@ -40,20 +42,23 @@ enum class SecurityType {
 object SecurityService {
 
     private fun getSecurityType(context: Context): SecurityType {
-        if (Frida.isDetected()) {
-            return SecurityType.Frida
-        }
-        if (SystemCalls.isDetected()) {
-            return SecurityType.SystemCalls
-        }
-        if (Root.isDetected()) {
-            return SecurityType.Root
-        }
-        if (DeveloperOptions.isDetected(context)) {
-            return SecurityType.DeveloperOptions
-        }
-        if (Emulator.isDetected(context)) {
-          return SecurityType.Emulator
+//        if (Frida.isDetected()) {
+//            return SecurityType.Frida
+//        }
+//        if (SystemCalls.isDetected()) {
+//            return SecurityType.SystemCalls
+//        }
+//        if (Root.isDetected()) {
+//            return SecurityType.Root
+//        }
+//        if (DeveloperOptions.isDetected(context)) {
+//            return SecurityType.DeveloperOptions
+//        }
+//        if (Emulator.isDetected(context)) {
+//          return SecurityType.Emulator
+//        }
+        if (AppIntegrity.isValid(context).not()) {
+          return SecurityType.AppIntegrity
         }
         return SecurityType.None
     }
@@ -65,7 +70,8 @@ object SecurityService {
             SecurityType.Root -> Pair("Device is rooted", "This application is not supported on rooted device.")
             SecurityType.DeveloperOptions -> Pair("USB Debugger/developer Option is ON", "This application is not supported on USB debugging enabled device.")
             SecurityType.Emulator -> Pair("Emulator detected", "This application is not supported on emulator.")
-            SecurityType.None -> Pair("No security issues detected", "This application is not supported.")
+            SecurityType.AppIntegrity -> Pair("App is not secure", "Please uninstall the application and install a secure version from the play store.")
+            SecurityType.None -> Pair("No security issues detected", "This application is safe to use.")
         }
     }
 
@@ -73,7 +79,7 @@ object SecurityService {
         val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
         intent.putExtra("title", title)
         intent.putExtra("message", message)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         activityContext.startActivity(intent)
     }
 
