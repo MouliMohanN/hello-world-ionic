@@ -66,11 +66,18 @@ private object NetworkOperator {
   }
 }
 
+private object Firebase {
+  fun detect(): Boolean {
+//    return FirebaseCrashlytics.getInstance().isEmulator()
+    return false
+  }
+}
+
 
 object Emulator {
 
   fun isDetected(context: Context): Boolean {
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context)
+    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect()
   }
 
   private fun checkViaBuild(): Boolean {
@@ -81,6 +88,7 @@ object Emulator {
       || Build.MODEL.lowercase().contains("emulator")
       || Build.MODEL.contains("Android SDK built for x86")
       || Build.HARDWARE == "goldfish"
+      || Build.HARDWARE == "ranchu"
       || Build.HARDWARE == "vbox86"
       || Build.HARDWARE.lowercase().contains("nox")
       || Build.FINGERPRINT.contains("generic")
