@@ -1,6 +1,7 @@
 package com.example.app.plugins
 
 import com.example.app.security.SecurityService
+import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin

@@ -71,6 +71,8 @@ object Obfuscation {
 
 object SecurityService {
 
+  var isSecurityCheckInProgress = false;
+
     private fun getSecurityType(context: Context): SecurityType {
         if (Frida.isDetected()) {
             return SecurityType.Frida
@@ -122,6 +124,10 @@ object SecurityService {
     }
 
     fun checkAndBlockHacker(activityContext: Activity, callback: (title: String, message: String) -> Unit) {
+        if (isSecurityCheckInProgress) {
+          return
+        }
+        isSecurityCheckInProgress = true
         val type = getSecurityType(activityContext)
         if (type == SecurityType.None) {
           callback("", "")
@@ -131,6 +137,7 @@ object SecurityService {
       val (title, message) = getTitleAndMessageForSecurityType(type)
       callback(title, message)
       launchSecurityActivity(activityContext, title, message)
+      isSecurityCheckInProgress = false
     }
 
 }
