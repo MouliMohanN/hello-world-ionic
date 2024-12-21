@@ -16,17 +16,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.LinkedList
 import java.util.Queue
 
 
 enum class SecurityType {
-    Frida,
-    SystemCalls,
-    Root,
-    DeveloperOptions,
-    Emulator,
-    AppIntegrity,
-    None
+  Frida,
+  SystemCalls,
+  Root,
+  DeveloperOptions,
+  Emulator,
+  AppIntegrity,
+  None
 }
 
 object Obfuscation {
@@ -81,118 +82,153 @@ object SecurityService {
   var fifoQueue: Queue<(title: String, message: String) -> Unit>? = null
   var result: SecurityType? = null
 
-    private fun getSecurityType(context: Context): SecurityType {
-        if (Frida.isDetected()) {
-            return SecurityType.Frida
-        }
-        if (SystemCalls.isDetected()) {
-            return SecurityType.SystemCalls
-        }
-        if (Root.isDetected()) {
-            return SecurityType.Root
-        }
-        if (Emulator.isDetected(context)) {
-          return SecurityType.Emulator
-        }
-        if (AppIntegrity.isValid(context).not()) {
-          return SecurityType.AppIntegrity
-        }
-        if (DeveloperOptions.isDetected(context)) {
-          return SecurityType.DeveloperOptions
-        }
-        return SecurityType.None
+  private fun getSecurityType(context: Context): SecurityType {
+    if (AppIntegrity.isValid(context)) {
+      return SecurityType.AppIntegrity
     }
-
-    private fun getTitleAndMessageForSecurityType(type: SecurityType): Pair<String, String> {
-        println("${SECURITY_LOG_TAG.decodeToString()} - getTitleAndMessageForSecurityType \n" +
-                "Frida - ${Obfuscation.Frida.title.decodeToString()}, ${Obfuscation.Frida.message.decodeToString()}\n" +
-                "SystemCalls - ${Obfuscation.SystemCalls.title.decodeToString()}, ${Obfuscation.SystemCalls.message.decodeToString()}\n" +
-                "Root - ${Obfuscation.Root.title.decodeToString()}, ${Obfuscation.Root.message.decodeToString()}\n" +
-                "DeveloperOptions - ${Obfuscation.DeveloperOptions.title.decodeToString()}, ${Obfuscation.DeveloperOptions.message.decodeToString()}\n" +
-                "Emulator - ${Obfuscation.Emulator.title.decodeToString()}, ${Obfuscation.Emulator.message.decodeToString()}\n" +
-                "AppIntegrity - ${Obfuscation.AppIntegrity.title.decodeToString()}, ${Obfuscation.AppIntegrity.message.decodeToString()}\n" +
-                "None - ${Obfuscation.None.title.decodeToString()}, ${Obfuscation.None.message.decodeToString()}")
-        return when (type) {
-            SecurityType.Frida -> Pair(Obfuscation.Frida.title.decodeToString(), Obfuscation.Frida.message.decodeToString())
-            SecurityType.SystemCalls -> Pair(Obfuscation.SystemCalls.title.decodeToString(), Obfuscation.SystemCalls.message.decodeToString())
-            SecurityType.Root -> Pair(Obfuscation.Root.title.decodeToString(), Obfuscation.Root.message.decodeToString())
-            SecurityType.DeveloperOptions -> Pair(Obfuscation.DeveloperOptions.title.decodeToString(), Obfuscation.DeveloperOptions.message.decodeToString())
-            SecurityType.Emulator -> Pair(Obfuscation.Emulator.title.decodeToString(), Obfuscation.Emulator.message.decodeToString())
-            SecurityType.AppIntegrity -> Pair(Obfuscation.AppIntegrity.title.decodeToString(), Obfuscation.AppIntegrity.message.decodeToString())
-            SecurityType.None -> Pair(Obfuscation.None.title.decodeToString(), Obfuscation.None.message.decodeToString())
-        }
+    if (DeveloperOptions.isDetected(context)) {
+      return SecurityType.DeveloperOptions
     }
-
-    private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
-        val (title, message) = getTitleAndMessageForSecurityType(type)
-        val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
-        intent.putExtra(SecurityIssueActivity.TITLE, title)
-        intent.putExtra(SecurityIssueActivity.MESSAGE, message)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        activityContext.startActivity(intent)
+    if (Root.isDetected()) {
+      return SecurityType.Root
     }
+    if (Frida.isDetected()) {
+      return SecurityType.Frida
+    }
+    if (SystemCalls.isDetected()) {
+      return SecurityType.SystemCalls
+    }
+    if (Emulator.isDetected(context)) {
+      return SecurityType.Emulator
+    }
+    return SecurityType.None
+  }
 
-    private fun notifyQueue() {
-      if (fifoQueue.isNullOrEmpty()) {
+  private fun getTitleAndMessageForSecurityType(type: SecurityType): Pair<String, String> {
+    println(
+      "${SECURITY_LOG_TAG.decodeToString()} - getTitleAndMessageForSecurityType \n" +
+        "Frida - ${Obfuscation.Frida.title.decodeToString()}, ${Obfuscation.Frida.message.decodeToString()}\n" +
+        "SystemCalls - ${Obfuscation.SystemCalls.title.decodeToString()}, ${Obfuscation.SystemCalls.message.decodeToString()}\n" +
+        "Root - ${Obfuscation.Root.title.decodeToString()}, ${Obfuscation.Root.message.decodeToString()}\n" +
+        "DeveloperOptions - ${Obfuscation.DeveloperOptions.title.decodeToString()}, ${Obfuscation.DeveloperOptions.message.decodeToString()}\n" +
+        "Emulator - ${Obfuscation.Emulator.title.decodeToString()}, ${Obfuscation.Emulator.message.decodeToString()}\n" +
+        "AppIntegrity - ${Obfuscation.AppIntegrity.title.decodeToString()}, ${Obfuscation.AppIntegrity.message.decodeToString()}\n" +
+        "None - ${Obfuscation.None.title.decodeToString()}, ${Obfuscation.None.message.decodeToString()}"
+    )
+    return when (type) {
+      SecurityType.Frida -> Pair(
+        Obfuscation.Frida.title.decodeToString(),
+        Obfuscation.Frida.message.decodeToString()
+      )
+
+      SecurityType.SystemCalls -> Pair(
+        Obfuscation.SystemCalls.title.decodeToString(),
+        Obfuscation.SystemCalls.message.decodeToString()
+      )
+
+      SecurityType.Root -> Pair(
+        Obfuscation.Root.title.decodeToString(),
+        Obfuscation.Root.message.decodeToString()
+      )
+
+      SecurityType.DeveloperOptions -> Pair(
+        Obfuscation.DeveloperOptions.title.decodeToString(),
+        Obfuscation.DeveloperOptions.message.decodeToString()
+      )
+
+      SecurityType.Emulator -> Pair(
+        Obfuscation.Emulator.title.decodeToString(),
+        Obfuscation.Emulator.message.decodeToString()
+      )
+
+      SecurityType.AppIntegrity -> Pair(
+        Obfuscation.AppIntegrity.title.decodeToString(),
+        Obfuscation.AppIntegrity.message.decodeToString()
+      )
+
+      SecurityType.None -> Pair(
+        Obfuscation.None.title.decodeToString(),
+        Obfuscation.None.message.decodeToString()
+      )
+    }
+  }
+
+  private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
+    val (title, message) = getTitleAndMessageForSecurityType(type)
+    CoroutineScope(Dispatchers.IO).launch {
+      val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
+      intent.putExtra(SecurityIssueActivity.TITLE, title)
+      intent.putExtra(SecurityIssueActivity.MESSAGE, message)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      activityContext.startActivity(intent)
+    }
+  }
+
+  private fun notifyQueue() {
+    if (fifoQueue.isNullOrEmpty()) {
+      return
+    }
+    fifoQueue?.forEach {
+      dispatchResult(it)
+    }
+    fifoQueue?.clear()
+  }
+
+  private fun dispatchResult(callback: (title: String, message: String) -> Unit) {
+    result?.let {
+      if (it == SecurityType.None) {
+        callback("", "")
         return
       }
-      fifoQueue?.forEach {
-        dispatchResult(it)
-      }
-      fifoQueue?.clear()
+      val (title, message) = getTitleAndMessageForSecurityType(it)
+      callback(title, message)
     }
+  }
 
-    private fun dispatchResult(callback: (title: String, message: String) -> Unit) {
-      result?.let {
-        if (it == SecurityType.None) {
-          callback("", "")
-          return
+  private fun isSecurityJobRunning(callback: (title: String, message: String) -> Unit): Boolean {
+    if (securityJob != null) {
+      if (result?.name.isNullOrEmpty()) {
+        // result is not computed yet
+        if (fifoQueue == null) {
+          fifoQueue = LinkedList()
         }
-        val (title, message) = getTitleAndMessageForSecurityType(it)
-        callback(title, message)
-      }
-    }
-
-    private fun isSecurityJobRunning(callback: (title: String, message: String) -> Unit): Boolean {
-      if (securityJob != null) {
-        println("mouliTesting - isSecurityJobRunning - result - ${result?.name}, fifoQueue - ${fifoQueue?.size}")
-        if (result?.name.isNullOrEmpty()) {
-          // result is not computed yet
-          fifoQueue?.offer(callback)
-        } else {
-          // result is computed
-          dispatchResult(callback)
-          notifyQueue()
-        }
-        return true
-      }
-      return false
-    }
-
-    private fun cleanUp() {
-      notifyQueue()
-      securityJob?.cancel()
-      securityJob = null
-      fifoQueue = null
-      result = null
-    }
-
-    fun checkAndBlockHacker(activityContext: Activity, callback: (title: String, message: String) -> Unit) {
-      if (isSecurityJobRunning(callback)) {
-        return
-      }
-      println("mouliTesting - job started")
-      securityJob = CoroutineScope(Dispatchers.Main).launch {
-        val type = getSecurityType(activityContext)
-        result = type
+        fifoQueue?.offer(callback)
+      } else {
+        // result is computed
         dispatchResult(callback)
         notifyQueue()
-        if (type != SecurityType.None) {
-          launchSecurityActivity(activityContext, type)
-        }
-        delay(5000)
-        cleanUp()
       }
+      return true
     }
+    return false
+  }
+
+  private fun cleanUp() {
+    notifyQueue()
+    securityJob?.cancel()
+    securityJob = null
+    fifoQueue = null
+    result = null
+  }
+
+  fun checkAndBlockHacker(
+    activityContext: Activity,
+    callback: (title: String, message: String) -> Unit
+  ) {
+    if (isSecurityJobRunning(callback)) {
+      return
+    }
+    securityJob = CoroutineScope(Dispatchers.IO).launch {
+      val type = getSecurityType(activityContext)
+      result = type
+      dispatchResult(callback)
+      notifyQueue()
+      if (type != SecurityType.None) {
+        launchSecurityActivity(activityContext, type)
+      }
+      delay(5000)
+      cleanUp()
+    }
+  }
 
 }

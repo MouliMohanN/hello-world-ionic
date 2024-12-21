@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
-import Echo from 'src/plugins/echoPlugin';
 import Security from 'src/plugins/securityPlugin';
 import {  CommonModule } from '@angular/common';
 
@@ -20,18 +19,27 @@ export class Tab1Page {
   description: string = ''
 
   constructor() {}
+  
 
   async onButtonPress() {
     console.log('button pressed');
-    const { value } = await Echo.echo({ value: 'Hello World!' });
-    // const value = 'Hello World!'
-    console.log('Response from native:', value);
-    this.message = `${value} from Native`
+    setTimeout(() => {
+      Security.isAppSecure()
+    }, 30)
+    setTimeout(() => {
+      Security.isAppSecure()
+    }, 60)
+    setTimeout(() => {
+      Security.isAppSecure()
+    }, 90)
+    setTimeout(() => {
+      Security.isAppSecure()
+    }, 120)
     const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await Security.isAppSecure();
     // const isAppSecure = true
     // const alertTitle = 'Title'
     // const alertDescription = 'Desc'
-    this.isSecure = isAppSecure
+    this.isSecure = !this.isSecure
     if (alertTitle && alertDescription) {
       this.title = alertTitle
       this.description = alertDescription
