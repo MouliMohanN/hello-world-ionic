@@ -11,6 +11,12 @@ import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Queue
 
 
 enum class SecurityType {
@@ -71,7 +77,9 @@ object Obfuscation {
 
 object SecurityService {
 
-  var isSecurityCheckInProgress = false;
+  var securityJob: Job? = null
+  var fifoQueue: Queue<(title: String, message: String) -> Unit>? = null
+  var result: SecurityType? = null
 
     private fun getSecurityType(context: Context): SecurityType {
         if (Frida.isDetected()) {
@@ -83,14 +91,14 @@ object SecurityService {
         if (Root.isDetected()) {
             return SecurityType.Root
         }
-        if (DeveloperOptions.isDetected(context)) {
-            return SecurityType.DeveloperOptions
-        }
         if (Emulator.isDetected(context)) {
           return SecurityType.Emulator
         }
         if (AppIntegrity.isValid(context).not()) {
           return SecurityType.AppIntegrity
+        }
+        if (DeveloperOptions.isDetected(context)) {
+          return SecurityType.DeveloperOptions
         }
         return SecurityType.None
     }
@@ -115,7 +123,8 @@ object SecurityService {
         }
     }
 
-    private fun launchSecurityActivity(activityContext: Activity, title: String, message: String) {
+    private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
+        val (title, message) = getTitleAndMessageForSecurityType(type)
         val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
         intent.putExtra(SecurityIssueActivity.TITLE, title)
         intent.putExtra(SecurityIssueActivity.MESSAGE, message)
@@ -123,21 +132,67 @@ object SecurityService {
         activityContext.startActivity(intent)
     }
 
-    fun checkAndBlockHacker(activityContext: Activity, callback: (title: String, message: String) -> Unit) {
-        if (isSecurityCheckInProgress) {
-          return
-        }
-        isSecurityCheckInProgress = true
-        val type = getSecurityType(activityContext)
-        if (type == SecurityType.None) {
+    private fun notifyQueue() {
+      if (fifoQueue.isNullOrEmpty()) {
+        return
+      }
+      fifoQueue?.forEach {
+        dispatchResult(it)
+      }
+      fifoQueue?.clear()
+    }
+
+    private fun dispatchResult(callback: (title: String, message: String) -> Unit) {
+      result?.let {
+        if (it == SecurityType.None) {
           callback("", "")
           return
         }
+        val (title, message) = getTitleAndMessageForSecurityType(it)
+        callback(title, message)
+      }
+    }
 
-      val (title, message) = getTitleAndMessageForSecurityType(type)
-      callback(title, message)
-      launchSecurityActivity(activityContext, title, message)
-      isSecurityCheckInProgress = false
+    private fun isSecurityJobRunning(callback: (title: String, message: String) -> Unit): Boolean {
+      if (securityJob != null) {
+        println("mouliTesting - isSecurityJobRunning - result - ${result?.name}, fifoQueue - ${fifoQueue?.size}")
+        if (result?.name.isNullOrEmpty()) {
+          // result is not computed yet
+          fifoQueue?.offer(callback)
+        } else {
+          // result is computed
+          dispatchResult(callback)
+          notifyQueue()
+        }
+        return true
+      }
+      return false
+    }
+
+    private fun cleanUp() {
+      notifyQueue()
+      securityJob?.cancel()
+      securityJob = null
+      fifoQueue = null
+      result = null
+    }
+
+    fun checkAndBlockHacker(activityContext: Activity, callback: (title: String, message: String) -> Unit) {
+      if (isSecurityJobRunning(callback)) {
+        return
+      }
+      println("mouliTesting - job started")
+      securityJob = CoroutineScope(Dispatchers.Main).launch {
+        val type = getSecurityType(activityContext)
+        result = type
+        dispatchResult(callback)
+        notifyQueue()
+        if (type != SecurityType.None) {
+          launchSecurityActivity(activityContext, type)
+        }
+        delay(5000)
+        cleanUp()
+      }
     }
 
 }
