@@ -83,7 +83,7 @@ object SecurityService {
   var result: SecurityType? = null
 
   private fun getSecurityType(context: Context): SecurityType {
-    if (AppIntegrity.isValid(context)) {
+    if (AppIntegrity.isValid(context).not()) {
       return SecurityType.AppIntegrity
     }
     if (DeveloperOptions.isDetected(context)) {
@@ -98,6 +98,7 @@ object SecurityService {
     if (SystemCalls.isDetected()) {
       return SecurityType.SystemCalls
     }
+
     if (Emulator.isDetected(context)) {
       return SecurityType.Emulator
     }
