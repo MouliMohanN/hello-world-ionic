@@ -160,7 +160,7 @@ object SecurityService {
       val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
       intent.putExtra(SecurityIssueActivity.TITLE, title)
       intent.putExtra(SecurityIssueActivity.MESSAGE, message)
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       activityContext.startActivity(intent)
     }
   }

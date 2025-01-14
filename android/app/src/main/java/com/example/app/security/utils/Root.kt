@@ -5,6 +5,23 @@ import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import java.io.File
 
+private object CheckRootMethod3Utils {
+  fun isProcessRunning(value: IntArray): Boolean {
+    var process: Process? = null
+    try {
+      process = Runtime.getRuntime().exec(arrayOf(value.decodeToString()))
+      return process.inputStream.bufferedReader().useLines { lines ->
+        lines.any()
+      }
+    } catch (t: Throwable) {
+      return false
+    } finally {
+      process?.destroy()
+    }
+  }
+}
+
+
 object Root {
 
     fun isDetected(): Boolean {
@@ -60,21 +77,11 @@ object Root {
     }
 
     private fun checkRootMethod3(): Boolean {
-        var process: Process? = null
-        try {
-            // /system/xbin/which
-            val which = intArrayOf(76,51,78,53,99,51,82,108,98,83,57,52,89,109,108,117,76,51,100,111,97,87,78,111)
-            // su
-            val su = intArrayOf(99,51,85,61)
-            println("${SECURITY_LOG_TAG.decodeToString()} - checkRootMethod3 - ${arrayOf(which.decodeToString(), su.decodeToString()).joinToString(", ")}")
-            process = Runtime.getRuntime().exec(arrayOf(which.decodeToString(), su.decodeToString()))
-            return process.inputStream.bufferedReader().useLines { lines ->
-                lines.any()
-            }
-        } catch (t: Throwable) {
-            return false
-        } finally {
-            process?.destroy()
-        }
+      // /system/xbin/which
+      val which = intArrayOf(76,51,78,53,99,51,82,108,98,83,57,52,89,109,108,117,76,51,100,111,97,87,78,111)
+      // su
+      val su = intArrayOf(99,51,85,61)
+      println("${SECURITY_LOG_TAG.decodeToString()} - checkRootMethod3 - ${arrayOf(which.decodeToString(), su.decodeToString()).joinToString(", ")}")
+      return CheckRootMethod3Utils.isProcessRunning(which) || CheckRootMethod3Utils.isProcessRunning(su)
     }
 }

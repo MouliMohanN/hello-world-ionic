@@ -18,7 +18,7 @@ class MainApplication: Application(), Application.ActivityLifecycleCallbacks {
 
   override fun onActivityResumed(activity: Activity) {
     if (activity is SecurityIssueActivity) return
-    SecurityService.checkAndBlockHacker(activity, { _, _ -> })
+//    SecurityService.checkAndBlockHacker(activity, { _, _ -> })
   }
 
   override fun onActivityPaused(activity: Activity) {}

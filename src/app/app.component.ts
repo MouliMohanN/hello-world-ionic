@@ -12,8 +12,8 @@ export class AppComponent {
   constructor(private platform: Platform) {
     this.platform.ready().then(async() => {
       console.log('Platform ready');
-      const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await Security.isAppSecure();
-      alert(`${isAppSecure} ${alertTitle} ${alertDescription}`)
+      // const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await Security.isAppSecure();
+      // alert(`${isAppSecure} ${alertTitle} ${alertDescription}`)
     })
   }
   

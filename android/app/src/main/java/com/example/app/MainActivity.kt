@@ -34,6 +34,6 @@ class MainActivity : BridgeActivity() {
 
   override fun onResume() {
     super.onResume()
-    SecurityService.checkAndBlockHacker(this, { _, _ -> })
+//    SecurityService.checkAndBlockHacker(this, { _, _ -> })
   }
 }

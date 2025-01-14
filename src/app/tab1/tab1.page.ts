@@ -23,18 +23,18 @@ export class Tab1Page {
 
   async onButtonPress() {
     console.log('button pressed');
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 30)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 60)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 90)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 120)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 30)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 60)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 90)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 120)
     const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await Security.isAppSecure();
     // const isAppSecure = true
     // const alertTitle = 'Title'

@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "android": "ionic capacitor sync android && npx cap run android"
+    "android": "npx ionic capacitor sync android && npx cap run android",
+    "adb-uninstall": "adb uninstall com.example.app"
   },
   "private": true,
   "dependencies": {
