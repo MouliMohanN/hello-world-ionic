@@ -3,12 +3,15 @@ package com.example.app.security
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.example.app.security.utils.AppIntegrity
 import com.example.app.security.utils.DeveloperOptions
 import com.example.app.security.utils.Emulator
 import com.example.app.security.utils.Frida
 import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
+import com.example.app.security.utils.hash.Manifest
+import com.example.app.security.utils.hash.manifestHash
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import kotlinx.coroutines.CoroutineScope
@@ -155,7 +158,17 @@ object SecurityService {
   }
 
   private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
-    val (title, message) = getTitleAndMessageForSecurityType(type)
+//    val (title, message) = getTitleAndMessageForSecurityType(type)
+    var title = ""
+    var message = ""
+    if (type == SecurityType.AppIntegrity) {
+      title = Manifest.getCompileTimeHash()
+      message = Manifest.getRunTimeHash(activityContext)
+    } else {
+      val (_title, _message) = getTitleAndMessageForSecurityType(type)
+      title = title
+      message = _message
+    }
     CoroutineScope(Dispatchers.IO).launch {
       val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
       intent.putExtra(SecurityIssueActivity.TITLE, title)
@@ -219,6 +232,7 @@ object SecurityService {
     if (isSecurityJobRunning(callback)) {
       return
     }
+    Toast.makeText(activityContext, manifestHash.decodeToString(), Toast.LENGTH_LONG).show()
     securityJob = CoroutineScope(Dispatchers.IO).launch {
       val type = getSecurityType(activityContext)
       result = type
