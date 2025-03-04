@@ -1,11 +1,15 @@
 package com.example.app.security.utils
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
+import android.util.Property
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
 
 private object Files {
 
@@ -108,12 +112,45 @@ private object Files {
     } catch (_: Exception){}
     return false
   }
+
+  private fun checkQEmuDrivers(): Boolean {
+    // goldfish
+    val goldfish = intArrayOf(90,50,57,115,90,71,90,112,99,50,103,61)
+    val QEMU_DRIVERS = arrayOf(goldfish.decodeToString())
+    // /proc/tty/drivers
+    val procTTYDrivers = intArrayOf(76,51,66,121,98,50,77,118,100,72,82,53,76,50,82,121,97,88,90,108,99,110,77,61)
+    // /proc/cpuinfo
+    val procCpuInfo = intArrayOf(76,51,66,121,98,50,77,118,89,51,66,49,97,87,53,109,98,119,61,61)
+    for (drivers_file in arrayOf<File>(File(procTTYDrivers.decodeToString()), File(procCpuInfo.decodeToString()))) {
+      if (drivers_file.exists() && drivers_file.canRead()) {
+        val data = ByteArray(1024)
+        try {
+          val `is`: InputStream = FileInputStream(drivers_file)
+          `is`.read(data)
+          `is`.close()
+        } catch (exception: java.lang.Exception) {
+          exception.printStackTrace()
+        }
+
+        val driver_data = String(data)
+        for (known_qemu_driver in QEMU_DRIVERS) {
+          if (driver_data.contains(known_qemu_driver)) {
+            return true
+          }
+        }
+      }
+    }
+
+    return false
+  }
+
   fun checkEmulatorFiles():Boolean {
     return (checkFiles(GENY_FILES)
       || checkFiles(ANDY_FILES)
       || checkFiles(NOX_FILES)
       || checkFiles(X86_FILES)
       || checkFiles(PIPES))
+      || checkQEmuDrivers()
   }
 }
 
@@ -207,6 +244,10 @@ object Emulator {
       || Build.PRODUCT == vbox86p.decodeToString()
       || Build.PRODUCT.lowercase().contains(nox.decodeToString())
       || Build.BOARD.lowercase().contains(nox.decodeToString())
+      || Build.BOOTLOADER.lowercase().contains(nox.decodeToString())
+      || Build.HARDWARE.lowercase().contains(nox.decodeToString())
+      || Build.PRODUCT.lowercase().contains(nox.decodeToString())
+      || Build.SERIAL.lowercase().contains(nox.decodeToString())
       || (Build.BRAND.lowercase().contains(generic.decodeToString()) && Build.DEVICE.lowercase().contains(generic.decodeToString())))
   }
 }
