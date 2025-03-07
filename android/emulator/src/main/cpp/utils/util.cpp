@@ -2,8 +2,9 @@
 // Created by FCI on 05-03-2025.
 //
 
-#include "string"
 #include "header/util.h"
+#include <string>
+#include <vector>
 
 
 
@@ -51,8 +52,8 @@ std::string getStringFromBase64(const std::string& base64) {
     for (char c : tempBase64) {
         if (!is_base64(c)) {
             // Invalid Base64 string
-            std::vector<int> invalidBase64String = {83,87,53,50,89,87,120,112,90,67,66,67,89,88,78,108,78,106,81,103,99,51,82,121,97,87,53,110};
-            throw std::runtime_error(getStringFromAscii(invalidBase64String));
+            // std::vector<int> invalidBase64String = {83,87,53,50,89,87,120,112,90,67,66,67,89,88,78,108,78,106,81,103,99,51,82,121,97,87,53,110};
+            throw std::runtime_error("Invalid Base64 string");
         }
     }
 

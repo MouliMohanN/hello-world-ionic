@@ -26,7 +26,22 @@ project("emulator")
 # used in the AndroidManifest.xml file.
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
+        utils/header/ConfigData.hpp
+        utils/ConfigData.cpp
+        utils/FileHelper.hpp
+        utils/util.cpp
+        Emulator.cpp
         EmulatorLib.cpp)
+
+# Add the source files
+set(SOURCE_FILES
+        src/main/cpp/utils/util.cpp
+        src/main/cpp/utils/ConfigData.hpp
+        src/main/cpp/Emulator.cpp
+        src/main/cpp/EmulatorLib.cpp
+        # Add other source files as needed
+)
+
 
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this

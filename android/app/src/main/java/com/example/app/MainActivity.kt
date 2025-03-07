@@ -15,8 +15,10 @@ class MainActivity : BridgeActivity() {
     plugins.add(SecurityPlugin::class.java)
     registerPlugins(plugins)
     super.onCreate(savedInstanceState)
-    val text = EmulatorLib().stringFromJNI()
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    val isDetected = EmulatorLib().isDetected()
+    val text = EmulatorLib().getResult()
+    Toast.makeText(this, isDetected.toString(), Toast.LENGTH_LONG).show()
+    println("Mouli_Security - ${text}")
   }
 
   override fun onWindowFocusChanged(hasFocus: Boolean) {

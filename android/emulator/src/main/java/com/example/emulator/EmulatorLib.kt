@@ -7,6 +7,7 @@ class EmulatorLib {
      * which is packaged with this application.
      */
     external fun isDetected(): Boolean
+    external fun getResult(): String
 
     companion object {
         // Used to load the 'emulator' library on application startup.

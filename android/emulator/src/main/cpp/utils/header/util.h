@@ -4,8 +4,9 @@
 
 #ifndef ANDROID_UTIL_H
 #define ANDROID_UTIL_H
-#include "string"
-#include "vector"
+
+#include <string>
+#include <vector>
 
 std::string getStringFromAscii(const std::vector<int>& asciiValues);
 
