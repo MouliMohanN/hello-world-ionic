@@ -86,21 +86,21 @@ object SecurityService {
   var result: SecurityType? = null
 
   private fun getSecurityType(context: Context): SecurityType {
-    if (AppIntegrity.isValid(context).not()) {
-      return SecurityType.AppIntegrity
-    }
-    if (DeveloperOptions.isDetected(context)) {
-      return SecurityType.DeveloperOptions
-    }
-    if (Root.isDetected()) {
-      return SecurityType.Root
-    }
-    if (Frida.isDetected()) {
-      return SecurityType.Frida
-    }
-    if (SystemCalls.isDetected()) {
-      return SecurityType.SystemCalls
-    }
+//    if (AppIntegrity.isValid(context).not()) {
+//      return SecurityType.AppIntegrity
+//    }
+//    if (DeveloperOptions.isDetected(context)) {
+//      return SecurityType.DeveloperOptions
+//    }
+//    if (Root.isDetected()) {
+//      return SecurityType.Root
+//    }
+//    if (Frida.isDetected()) {
+//      return SecurityType.Frida
+//    }
+//    if (SystemCalls.isDetected()) {
+//      return SecurityType.SystemCalls
+//    }
 
     if (Emulator.isDetected(context)) {
       return SecurityType.Emulator

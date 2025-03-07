@@ -3,8 +3,9 @@ package com.example.app
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import com.example.app.plugins.SecurityPlugin
-import com.example.app.security.SecurityService
+import com.example.emulator.EmulatorLib
 import com.getcapacitor.BridgeActivity
 import com.getcapacitor.Plugin
 
@@ -14,6 +15,8 @@ class MainActivity : BridgeActivity() {
     plugins.add(SecurityPlugin::class.java)
     registerPlugins(plugins)
     super.onCreate(savedInstanceState)
+    val text = EmulatorLib().stringFromJNI()
+    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
   }
 
   override fun onWindowFocusChanged(hasFocus: Boolean) {
