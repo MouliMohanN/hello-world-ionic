@@ -10,8 +10,7 @@
 
 std::vector<std::string> Emulator::detections;
 
-void Emulator::checkHardwareProps()
-{
+void Emulator::checkHardwareProps() {
     // ro.build.product
     std::vector<int> roBuildProduct = {99, 109, 56, 117, 89, 110, 86, 112, 98, 71, 81, 117, 99, 72,
                                        74, 118, 90, 72, 86, 106, 100, 65, 61, 61};
@@ -22,7 +21,7 @@ void Emulator::checkHardwareProps()
                                               100, 67, 53, 116, 89, 87, 53, 49, 90, 109, 70, 106,
                                               100, 72, 86, 121, 90, 88, 73, 61};
     std::string manufacturer = FileHelper::getSystemProperty(
-        getStringFromAscii(roProductManufacturer));
+            getStringFromAscii(roProductManufacturer));
 
     // ro.bootloader
     std::vector<int> roBootLoader = {99, 109, 56, 117, 89, 109, 57, 118, 100, 71, 120, 118, 89, 87,
@@ -45,23 +44,19 @@ void Emulator::checkHardwareProps()
     // Product
     std::vector<int> productString = {85, 72, 74, 118, 90, 72, 86, 106, 100, 65, 61, 61};
 
-    for (const std::string &_product : ConfigData::products)
-    {
-        if (product == _product)
-        {
+    for (const std::string &_product: ConfigData::products) {
+        if (product == _product) {
             detections.push_back(
-                "- " + getStringFromAscii(detected) + " " + getStringFromAscii(productString) +
-                ": " + _product);
+                    "- " + getStringFromAscii(detected) + " " + getStringFromAscii(productString) +
+                    ": " + _product);
         }
     }
 
     // Manufacturer
     std::vector<int> manufacturerString = {84, 87, 70, 117, 100, 87, 90, 104, 89, 51, 82, 49, 99,
                                            109, 86, 121};
-    for (const std::string &_manufacturer : ConfigData::manufacturers)
-    {
-        if (manufacturer == _manufacturer)
-        {
+    for (const std::string &_manufacturer: ConfigData::manufacturers) {
+        if (manufacturer == _manufacturer) {
             detections.push_back("- " + getStringFromAscii(detected) + " " +
                                  getStringFromAscii(manufacturerString) + ": " + manufacturer);
         }
@@ -69,43 +64,37 @@ void Emulator::checkHardwareProps()
 
     // nox
     std::vector<int> noxString = {98, 109, 57, 52};
-    if (bootloader == getStringFromAscii(noxString))
-    {
+    if (bootloader == getStringFromAscii(noxString)) {
         // Bootloader
         std::vector<int> bootLoaderString = {81, 109, 57, 118, 100, 71, 120, 118, 89, 87, 82, 108,
                                              99, 103, 61, 61};
         detections.push_back(
-            "- " + getStringFromAscii(detected) + " " + getStringFromAscii(bootLoaderString) +
-            ": " + bootloader);
+                "- " + getStringFromAscii(detected) + " " + getStringFromAscii(bootLoaderString) +
+                ": " + bootloader);
     }
 
     // Device
     std::vector<int> deviceString = {82, 71, 86, 50, 97, 87, 78, 108};
-    for (const std::string &info : ConfigData::deviceInfo)
-    {
-        if (device == info)
-        {
+    for (const std::string &info: ConfigData::deviceInfo) {
+        if (device == info) {
             detections.push_back(
-                "- " + getStringFromAscii(detected) + " " + getStringFromAscii(deviceString) +
-                ": " + info);
+                    "- " + getStringFromAscii(detected) + " " + getStringFromAscii(deviceString) +
+                    ": " + info);
         }
     }
 
     // Hardware
     std::vector<int> hardwareString = {83, 71, 70, 121, 90, 72, 100, 104, 99, 109, 85, 61};
-    for (const std::string &_hardware : ConfigData::hardwares)
-    {
-        if (hardware == _hardware)
-        {
+    for (const std::string &_hardware: ConfigData::hardwares) {
+        if (hardware == _hardware) {
             detections.push_back(
-                "- " + getStringFromAscii(detected) + " " + getStringFromAscii(hardwareString) +
-                ": " + hardware);
+                    "- " + getStringFromAscii(detected) + " " + getStringFromAscii(hardwareString) +
+                    ": " + hardware);
         }
     }
 }
 
-void Emulator::checkMounts()
-{
+void Emulator::checkMounts() {
     // /proc/mounts
     std::vector<int> procMounts = {76, 51, 66, 121, 98, 50, 77, 118, 98, 87, 57, 49, 98, 110, 82,
                                    122};
@@ -120,18 +109,15 @@ void Emulator::checkMounts()
     std::vector<std::string> file = FileHelper::readFile(getStringFromAscii(procMounts));
     std::string vboxsfString = getStringFromAscii(vboxsf);
     std::string detectedVmModuleInMountsString = getStringFromAscii(detectedVmModuleInMounts);
-    for (const std::string &i : file)
-    {
-        if (i.find(vboxsfString) != std::string::npos)
-        {
+    for (const std::string &i: file) {
+        if (i.find(vboxsfString) != std::string::npos) {
             detections.emplace_back(detectedVmModuleInMountsString);
             return;
         }
     }
 }
 
-void Emulator::checkCPUInfo()
-{
+void Emulator::checkCPUInfo() {
     // /proc/cpuinfo
     std::vector<int> procCpuInfo = {76, 51, 66, 121, 98, 50, 77, 118, 89, 51, 66, 49, 97, 87, 53,
                                     109, 98, 119, 61, 61};
@@ -161,28 +147,22 @@ void Emulator::checkCPUInfo()
     std::string detectedHypervisorInCpuinfoString = getStringFromAscii(detectedHypervisorInCpuinfo);
     std::string detectedHostCpuInCpuinfoString = getStringFromAscii(detectedHostCpuInCpuinfo);
 
-    for (const std::string &i : file)
-    {
-        if (i.find(hypervisorString) != std::string::npos)
-        {
+    for (const std::string &i: file) {
+        if (i.find(hypervisorString) != std::string::npos) {
             detections.emplace_back(detectedHypervisorInCpuinfoString);
             break;
         }
     }
 
-    for (const std::string &i : file)
-    {
-        if (i.find(amdString) != std::string::npos || i.find(intelString) != std::string::npos)
-        {
+    for (const std::string &i: file) {
+        if (i.find(amdString) != std::string::npos || i.find(intelString) != std::string::npos) {
             detections.emplace_back(detectedHostCpuInCpuinfoString);
             break;
         }
     }
 }
 
-void Emulator::checkSystemFiles()
-{
-
+void Emulator::checkSystemFiles() {
     // /data/property/
     std::vector<int> dataProperty = {76, 50, 82, 104, 100, 71, 69, 118, 99, 72, 74, 118, 99, 71, 86,
                                      121, 100, 72, 107, 118};
@@ -203,39 +183,32 @@ void Emulator::checkSystemFiles()
                                                 99, 71, 86, 121, 100, 72, 107, 103, 82, 109, 108,
                                                 115, 90, 81, 61, 61};
 
-    for (const std::string &emulatorFile : ConfigData::emulatorFiles)
-    {
-        if (FileHelper::fileExists(emulatorFile))
-        {
+    for (const std::string &emulatorFile: ConfigData::emulatorFiles) {
+        if (FileHelper::fileExists(emulatorFile)) {
             detections.push_back(getStringFromAscii(detectedEmulatorFile) + emulatorFile);
             break;
         }
     }
 
-    for (const std::string &emulatorFile : ConfigData::newEmulatorFiles)
-    {
-        if (FileHelper::fileExists(emulatorFile))
-        {
+    for (const std::string &emulatorFile: ConfigData::newEmulatorFiles) {
+        if (FileHelper::fileExists(emulatorFile)) {
             detections.push_back(getStringFromAscii(detectedEmulatorFile2) + emulatorFile);
             break;
         }
     }
 
     std::vector<std::string> out = FileHelper::listFilesInDirectory(
-        getStringFromAscii(dataProperty));
+            getStringFromAscii(dataProperty));
     std::string noxString = getStringFromAscii(nox);
-    for (const std::string &i : out)
-    {
-        if (i.find(noxString) != std::string::npos)
-        {
+    for (const std::string &i: out) {
+        if (i.find(noxString) != std::string::npos) {
             detections.emplace_back(getStringFromAscii(detectedNoxPropertyFile));
             break;
         }
     }
 }
 
-void Emulator::checkCPUArchitecture()
-{
+void Emulator::checkCPUArchitecture() {
     // ro.product.cpu.abilist
     std::vector<int> roProductCpuAbilist = {99, 109, 56, 117, 99, 72, 74, 118, 90, 72, 86, 106, 100,
                                             67, 53, 106, 99, 72, 85, 117, 89, 87, 74, 112, 98, 71,
@@ -250,14 +223,12 @@ void Emulator::checkCPUArchitecture()
 
     std::string abi = FileHelper::getSystemProperty(getStringFromAscii(roProductCpuAbilist));
 
-    if (abi.find(x86String) != std::string::npos)
-    {
+    if (abi.find(x86String) != std::string::npos) {
         detections.emplace_back(getStringFromAscii(detectedX86Architecture));
     }
 }
 
-void Emulator::checkArmTranslation()
-{
+void Emulator::checkArmTranslation() {
     // libhoudini.so
     std::vector<int> libHoudiniSo = {98, 71, 108, 105, 97, 71, 57, 49, 90, 71, 108, 117, 97, 83, 53,
                                      122, 98, 119, 61, 61};
@@ -313,37 +284,31 @@ void Emulator::checkArmTranslation()
 
     std::string libHoudiniSoString = getStringFromAscii(libHoudiniSo);
     std::vector<dl_phdr_info> info = FileHelper::getLoadedLibraries();
-    for (const dl_phdr_info &i : info)
-    {
-        if (strstr(i.dlpi_name, libHoudiniSoString.c_str()))
-        {
+    for (const dl_phdr_info &i: info) {
+        if (strstr(i.dlpi_name, libHoudiniSoString.c_str())) {
             detections.emplace_back(getStringFromAscii(detectedArmTranslation));
             break;
         }
     }
 
     std::string prop = FileHelper::getSystemProperty(getStringFromAscii(roDalvikVmNativeBridge));
-    if (prop != "0" && !prop.empty())
-    {
+    if (prop != "0" && !prop.empty()) {
         detections.emplace_back(getStringFromAscii(detectedArmTranslationProperty));
     }
 
     if (FileHelper::fileExists(getStringFromAscii(systemLibLibHoudiniSo)) ||
-        FileHelper::fileExists(getStringFromAscii(systemLib64LibHoudiniSo)))
-    {
+        FileHelper::fileExists(getStringFromAscii(systemLib64LibHoudiniSo))) {
         detections.emplace_back(getStringFromAscii(detectedArmTranslationLibrary));
     }
 
     std::string arm = FileHelper::getSystemProperty(getStringFromAscii(roDalvikVmIsaArm));
     std::string arm64 = FileHelper::getSystemProperty(getStringFromAscii(roDalvikVmIsaArm64));
-    if (arm == getStringFromAscii(x86) || arm64 == getStringFromAscii(x86_64))
-    {
+    if (arm == getStringFromAscii(x86) || arm64 == getStringFromAscii(x86_64)) {
         detections.emplace_back(getStringFromAscii(detectedArmTranslationProperty2));
     }
 }
 
-void Emulator::findEmulatorMemory()
-{
+void Emulator::findEmulatorMemory() {
     // libc.so
     std::vector<int> libcSo = {98, 71, 108, 105, 89, 121, 53, 122, 98, 119, 61, 61};
     // libandroid_runtime.so
@@ -363,25 +328,21 @@ void Emulator::findEmulatorMemory()
                                                  89, 50, 116, 122, 73, 69, 49, 108, 98, 87, 57, 121,
                                                  101, 81, 61, 61};
     std::vector<std::string> libraries{
-        getStringFromAscii(libcSo),
-        getStringFromAscii(libAndroidRuntimeSo),
-        getStringFromAscii(libArtSo)};
+            getStringFromAscii(libcSo),
+            getStringFromAscii(libAndroidRuntimeSo),
+            getStringFromAscii(libArtSo)};
 
-    for (const std::string &library : libraries)
-    {
+    for (const std::string &library: libraries) {
         bool result = FileHelper::findStringInMaps(library, bluestacksString);
-        if (result)
-        {
+        if (result) {
             detections.emplace_back(getStringFromAscii(detectedBluestacksMemory));
             return;
         }
     }
 }
 
-bool Emulator::isDetected()
-{
-    if (!detections.empty())
-    {
+bool Emulator::isDetected() {
+    if (!detections.empty()) {
         return true;
     }
     checkHardwareProps();
@@ -395,16 +356,13 @@ bool Emulator::isDetected()
     return !detections.empty();
 }
 
-std::string Emulator::getResult()
-{
-    if (detections.empty())
-    {
+std::string Emulator::getResult() {
+    if (detections.empty()) {
         return "";
     }
 
     std::string result;
-    for (const std::string &detection : detections)
-    {
+    for (const std::string &detection: detections) {
         result += detection + "\n";
     }
 

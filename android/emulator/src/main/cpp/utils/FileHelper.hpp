@@ -12,13 +12,13 @@
 #include "dirent.h"
 #include "unistd.h"
 #include "header/util.h"
-
-#define PROP_VALUE_MAX  92
+#include <sys/system_properties.h>
 
 namespace FileHelper {
-    inline bool findStringInMaps(const std::string& targetLib, const std::string& targetString) {
+    inline bool findStringInMaps(const std::string &targetLib, const std::string &targetString) {
         // /proc/self/maps
-        const std::vector<int> procSelfMaps = {76,51,66,121,98,50,77,118,99,50,86,115,90,105,57,116,89,88,66,122};
+        const std::vector<int> procSelfMaps = {76, 51, 66, 121, 98, 50, 77, 118, 99, 50, 86, 115,
+                                               90, 105, 57, 116, 89, 88, 66, 122};
         std::ifstream mapsFile(getStringFromAscii(procSelfMaps));
         if (!mapsFile.is_open()) {
             return false;
@@ -34,11 +34,13 @@ namespace FileHelper {
             if (iss >> addressRange >> permissions >> offset >> dev >> inode) {
                 if (iss >> pathname && pathname.find(targetLib) != std::string::npos) {
                     sscanf(addressRange.c_str(), "%p-%p", &startAddr, &endAddr);
-                    auto size = static_cast<size_t>(static_cast<char *>(endAddr) - static_cast<char *>(startAddr));
+                    auto size = static_cast<size_t>(static_cast<char *>(endAddr) -
+                                                    static_cast<char *>(startAddr));
 
                     if (permissions.find('r') != std::string::npos) {
                         for (size_t off = 0; off <= size - targetString.size(); off++) {
-                            if (memcmp(static_cast<char *>(startAddr) + off, targetString.c_str(), targetString.size()) == 0) {
+                            if (memcmp(static_cast<char *>(startAddr) + off, targetString.c_str(),
+                                       targetString.size()) == 0) {
                                 return true;
                             }
                         }
@@ -50,7 +52,7 @@ namespace FileHelper {
         return false;
     }
 
-    inline std::vector<std::string> readFile(const std::string& path) {
+    inline std::vector<std::string> readFile(const std::string &path) {
         std::vector<std::string> returnVal = std::vector<std::string>();
         char line[512] = {0};
         unsigned int line_count = 0;
@@ -69,7 +71,7 @@ namespace FileHelper {
         return returnVal;
     }
 
-    inline std::vector<std::string> listFilesInDirectory(const std::string& path) {
+    inline std::vector<std::string> listFilesInDirectory(const std::string &path) {
         std::vector<std::string> files;
         DIR *dir;
         struct dirent *ent;
@@ -83,7 +85,7 @@ namespace FileHelper {
         return files;
     }
 
-    inline bool fileExists(const std::string& path) {
+    inline bool fileExists(const std::string &path) {
         FILE *file;
         if ((file = fopen(path.c_str(), "r"))) {
             fclose(file);
@@ -109,7 +111,7 @@ namespace FileHelper {
         return infos;
     }
 
-    inline std::string getSystemProperty(const std::string& input) {
+    inline std::string getSystemProperty(const std::string &input) {
         char prop_out[PROP_VALUE_MAX];
         if (__system_property_get(input.c_str(), prop_out)) {
             return {prop_out};
