@@ -104,7 +104,7 @@ namespace FileHelper {
                 return 0;
             }
 
-            ((std::vector<dl_phdr_info> *) data)->push_back(*info);
+            ((std::vector<dl_phdr_info> *) data)->emplace_back(*info);
             return 0;
         }, &infos);
 
