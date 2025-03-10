@@ -5,8 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
 import android.util.Property
+import android.widget.Toast
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.emulator.EmulatorLib
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -178,7 +180,8 @@ private object Firebase {
 object Emulator {
 
   fun isDetected(context: Context): Boolean {
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect()
+
+    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || EmulatorLib().isDetected()
   }
 
   private fun checkViaBuild(): Boolean {
