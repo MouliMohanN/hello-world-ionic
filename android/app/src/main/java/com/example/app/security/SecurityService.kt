@@ -86,21 +86,21 @@ object SecurityService {
   var result: SecurityType? = null
 
   private fun getSecurityType(context: Context): SecurityType {
-//    if (AppIntegrity.isValid(context).not()) {
-//      return SecurityType.AppIntegrity
-//    }
-//    if (DeveloperOptions.isDetected(context)) {
-//      return SecurityType.DeveloperOptions
-//    }
-//    if (Root.isDetected()) {
-//      return SecurityType.Root
-//    }
-//    if (Frida.isDetected()) {
-//      return SecurityType.Frida
-//    }
-//    if (SystemCalls.isDetected()) {
-//      return SecurityType.SystemCalls
-//    }
+    if (AppIntegrity.isValid(context).not()) {
+      return SecurityType.AppIntegrity
+    }
+    if (DeveloperOptions.isDetected(context)) {
+      return SecurityType.DeveloperOptions
+    }
+    if (Root.isDetected(context)) {
+      return SecurityType.Root
+    }
+    if (Frida.isDetected()) {
+      return SecurityType.Frida
+    }
+    if (SystemCalls.isDetected()) {
+      return SecurityType.SystemCalls
+    }
 
     if (Emulator.isDetected(context)) {
       return SecurityType.Emulator
@@ -158,22 +158,22 @@ object SecurityService {
   }
 
   private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
-//    val (title, message) = getTitleAndMessageForSecurityType(type)
-    var title = ""
-    var message = ""
-    if (type == SecurityType.AppIntegrity) {
-      title = Manifest.getCompileTimeHash()
-      message = Manifest.getRunTimeHash(activityContext)
-    } else {
-      val (_title, _message) = getTitleAndMessageForSecurityType(type)
-      title = title
-      message = _message
-    }
+    val (title, message) = getTitleAndMessageForSecurityType(type)
+//    var title = ""
+//    var message = ""
+//    if (type == SecurityType.AppIntegrity) {
+//      title = Manifest.getCompileTimeHash()
+//      message = Manifest.getRunTimeHash(activityContext)
+//    } else {
+//      val (_title, _message) = getTitleAndMessageForSecurityType(type)
+//      title = title
+//      message = _message
+//    }
     CoroutineScope(Dispatchers.IO).launch {
       val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
       intent.putExtra(SecurityIssueActivity.TITLE, title)
       intent.putExtra(SecurityIssueActivity.MESSAGE, message)
-//      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       activityContext.startActivity(intent)
     }
   }
@@ -232,7 +232,7 @@ object SecurityService {
     if (isSecurityJobRunning(callback)) {
       return
     }
-    Toast.makeText(activityContext, manifestHash.decodeToString(), Toast.LENGTH_LONG).show()
+//    Toast.makeText(activityContext, manifestHash.decodeToString(), Toast.LENGTH_LONG).show()
     securityJob = CoroutineScope(Dispatchers.IO).launch {
       val type = getSecurityType(activityContext)
       result = type

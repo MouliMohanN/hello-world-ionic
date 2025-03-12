@@ -78,6 +78,17 @@ object Root {
         val dataLocalSu = intArrayOf(76,50,82,104,100,71,69,118,98,71,57,106,89,87,119,118,99,51,85,61)
         // /su/bin/su
         val suBinSu = intArrayOf(76,51,78,49,76,50,74,112,98,105,57,122,100,81,61,61)
+        // /system/bin/.ext/su
+        val systemBinExtSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 105, 97, 87, 52, 118, 76, 109, 86, 52, 100, 67, 57, 122, 100, 81, 61, 61)
+        // /system/usr/we-need-root/su
+        val systemUsrWeNeedRootSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 49, 99, 51, 73, 118, 100, 50, 85, 116, 98, 109, 86, 108, 90, 67, 49, 121, 98, 50, 57, 48, 76, 51, 78, 49)
+        // /cache/su
+        val cacheSu = intArrayOf(76, 50, 78, 104, 89, 50, 104, 108, 76, 51, 78, 49)
+        // /data/su
+        val dataSu = intArrayOf(76, 50, 82, 104, 100, 71, 69, 118, 99, 51, 85, 61)
+        // /dev/su
+        val devSu = intArrayOf(76, 50, 82, 108, 100, 105, 57, 122, 100, 81, 61, 61)
+
         val paths = arrayOf(
             superUser.decodeToString(),
             sbinSu.decodeToString(),
@@ -88,7 +99,12 @@ object Root {
             systemSdXbinSu.decodeToString(),
             systemBinFailsafeSu.decodeToString(),
             dataLocalSu.decodeToString(),
-            suBinSu.decodeToString()
+            suBinSu.decodeToString(),
+            systemBinExtSu.decodeToString(),
+            systemUsrWeNeedRootSu.decodeToString(),
+            cacheSu.decodeToString(),
+            dataSu.decodeToString(),
+            devSu.decodeToString()
         )
         println("${SECURITY_LOG_TAG.decodeToString()} - checkSuperUserPaths - paths: ${paths.joinToString(", ")}")
         for (path in paths) {

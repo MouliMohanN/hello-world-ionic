@@ -3,9 +3,8 @@ package com.example.app
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
 import com.example.app.plugins.SecurityPlugin
-import com.example.emulator.EmulatorLib
+import com.example.app.security.SecurityService
 import com.getcapacitor.BridgeActivity
 import com.getcapacitor.Plugin
 
