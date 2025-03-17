@@ -241,7 +241,7 @@ object SecurityService {
       if (type != SecurityType.None) {
         launchSecurityActivity(activityContext, type)
       }
-      delay(5000)
+      delay(3000)
       cleanUp()
     }
   }
