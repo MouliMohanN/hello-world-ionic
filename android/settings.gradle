@@ -4,3 +4,5 @@ project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor
 include ':emulator'
 project(':emulator').projectDir = new File('./emulator/')
 apply from: 'capacitor.settings.gradle'
+include ':wave-utils'
+project(':wave-utils').projectDir = new File('./wave-utils/')
