@@ -14,26 +14,18 @@ class MainActivity : BridgeActivity() {
     plugins.add(SecurityPlugin::class.java)
     registerPlugins(plugins)
     super.onCreate(savedInstanceState)
-  }
-
-  override fun onWindowFocusChanged(hasFocus: Boolean) {
-    super.onWindowFocusChanged(hasFocus)
-    try {
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-        if (hasFocus) {
-          window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
-        } else {
-          window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-          )
-        }
-      }
-    } catch (error: Exception) { }
+     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+      window.setFlags(
+        WindowManager.LayoutParams.FLAG_SECURE,
+        WindowManager.LayoutParams.FLAG_SECURE
+      )
+    } else {
+      setRecentsScreenshotEnabled(false)
+    }
   }
 
   override fun onResume() {
     super.onResume()
-//    SecurityService.checkAndBlockHacker(this, { _, _ -> })
+    SecurityService.checkAndBlockHacker(this, { _, _ -> })
   }
 }
