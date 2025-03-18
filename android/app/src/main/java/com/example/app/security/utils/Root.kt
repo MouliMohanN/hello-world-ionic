@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.wave_utils.WaveUtilsLib
 import java.io.File
 import java.io.IOException
 import java.util.Scanner
@@ -507,11 +508,19 @@ object Root {
     return Utils.hasDangerousProps()
   }
 
+  private fun hasSuperUserPathsNative(): Boolean {
+    val waveUtilsLib = WaveUtilsLib()
+    return waveUtilsLib.doPathsExist(Constants.getSuPaths().toTypedArray())
+      || waveUtilsLib.doPathsExist(Constants.getBusyBoxPaths().toTypedArray())
+      || waveUtilsLib.doPathsExist(Constants.getMagiskPaths().toTypedArray())
+  }
+
   fun isDetected(context: Context): Boolean {
     return hasBuildTags()
       || hasSuperUserPaths()
       || isSuBinaryRunning()
       || hasRootManagementApps(context)
       || hasDangerousProps()
+      || hasSuperUserPathsNative()
   }
 }
