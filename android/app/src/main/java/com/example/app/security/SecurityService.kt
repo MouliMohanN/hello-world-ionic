@@ -88,7 +88,7 @@ object SecurityService {
     if (AppIntegrity.isValid(context).not()) {
       return SecurityType.AppIntegrity
     }
-    if (!DeveloperOptions.skipUsbDeveloperOptionDetection && DeveloperOptions.isDetected(context)) {
+    if (DeveloperOptions.isDetected(context)) {
       return SecurityType.DeveloperOptions
     }
     if (Root.isDetected(context)) {
@@ -220,6 +220,11 @@ object SecurityService {
     securityJob = null
     fifoQueue = null
     result = null
+  }
+
+  fun onSkipButtonClicked() {
+    DeveloperOptions.setSkipUsbDeveloperOptionDetection(true)
+    cleanUp()
   }
 
   fun checkAndBlockHacker(

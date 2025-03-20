@@ -41,12 +41,8 @@ class SecurityIssueActivity : AppCompatActivity() {
       issueDescription.text = extras.getString(MESSAGE)
       val skipButton = findViewById<Button>(R.id.btn_skip)
       skipButton.setOnClickListener { view: View? ->
-        DeveloperOptions.skipUsbDeveloperOptionDetection = true
-        Toast.makeText(this, "Skipping in 3 seconds", Toast.LENGTH_LONG).show()
-        skipButton.isEnabled = false
-        Handler().postDelayed({
-          finish()
-        }, 3000)
+        SecurityService.onSkipButtonClicked()
+        finish()
       }
       val openDevOptionSettingsButton = findViewById<Button>(R.id.btn_open_dev_option_settings)
       openDevOptionSettingsButton.setOnClickListener { view: View? ->

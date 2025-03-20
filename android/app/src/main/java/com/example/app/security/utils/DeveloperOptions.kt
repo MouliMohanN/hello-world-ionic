@@ -7,9 +7,16 @@ import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 
 object DeveloperOptions {
-  var skipUsbDeveloperOptionDetection: Boolean = false
+  private var skipUsbDeveloperOptionDetection: Boolean = false
+
+  fun setSkipUsbDeveloperOptionDetection(skipUsbDeveloperOptionDetection: Boolean) {
+    this.skipUsbDeveloperOptionDetection = skipUsbDeveloperOptionDetection
+  }
 
   fun isDetected(context: Context): Boolean {
+    if (skipUsbDeveloperOptionDetection) {
+      return false
+    }
     // eng
     val eng = intArrayOf(90, 87, 53, 110)
     println("${SECURITY_LOG_TAG.decodeToString()} - DeveloperOptions - eng: ${eng.decodeToString()}")
