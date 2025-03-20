@@ -2,16 +2,13 @@ package com.example.app.security
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.R
-import com.example.app.security.utils.DeveloperOptions
 import kotlin.system.exitProcess
 
 class SecurityIssueActivity : AppCompatActivity() {

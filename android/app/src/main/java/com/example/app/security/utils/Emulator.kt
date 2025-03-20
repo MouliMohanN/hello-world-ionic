@@ -1,11 +1,8 @@
 package com.example.app.security.utils
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
-import android.util.Property
-import android.widget.Toast
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import com.example.emulator.EmulatorLib
