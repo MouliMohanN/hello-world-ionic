@@ -44,6 +44,68 @@ private object Constants {
     // /dev/su
     val devSu = intArrayOf(76, 50, 82, 108, 100, 105, 57, 122, 100, 81, 61, 61)
 
+    /** *********************Additional su paths************************* */
+
+    // /system/xbin/daemonsu
+    val systemXbinDaemonsu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 52, 89, 109, 108, 117, 76, 50, 82, 104, 90, 87, 49, 118, 98, 110, 78, 49)
+    // /system/bin/.ext/daemonsu
+    val systemBinExtDaemonsu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 105, 97, 87, 52, 118, 76, 109, 86, 52, 100, 67, 57, 107, 89, 87, 86, 116, 98, 50, 53, 122, 100, 81, 61, 61)
+    // /system/etc/.has_su_daemon
+    val systemEtcHasSuDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 122, 100, 86, 57, 107, 89, 87, 86, 116, 98, 50, 52, 61)
+    // /system/etc/.installed_su_daemon
+    val systemEtcInstalledSuDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 122, 100, 86, 57, 107, 89, 87, 86, 116, 98, 50, 52, 61)
+    // /system/etc/init.d/99SuperSUDaemon
+    val systemEtcInitD99SuperSUDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 122, 107, 53, 85, 51, 86, 119, 90, 88, 74, 84, 86, 85, 82, 104, 90, 87, 49, 118, 98, 103, 61, 61)
+    // /system/etc/init.d/99su
+    val systemEtcInitD99su = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 122, 107, 53, 99, 51, 85, 61)
+    // /system/etc/init.d/su
+    val systemEtcInitDSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 51, 78, 49)
+    // /system/etc/su.conf
+    val systemEtcSuConf = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 99, 51, 85, 117, 89, 50, 57, 117, 90, 103, 61, 61)
+    // /system/etc/.installed_su
+    val systemEtcInstalledSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 122, 100, 81, 61, 61)
+    // /system/etc/.has_su
+    val systemEtcHasSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 122, 100, 81, 61, 61)
+    // /system/xbin/supersu
+    val systemXbinSupersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 52, 89, 109, 108, 117, 76, 51, 78, 49, 99, 71, 86, 121, 99, 51, 85, 61)
+    // /system/bin/.ext/supersu
+    val systemBinExtSupersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 105, 97, 87, 52, 118, 76, 109, 86, 52, 100, 67, 57, 122, 100, 88, 66, 108, 99, 110, 78, 49)
+    // /system/etc/.has_supersu_daemon
+    val systemEtcHasSupersuDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 122, 100, 88, 66, 108, 99, 110, 78, 49, 88, 50, 82, 104, 90, 87, 49, 118, 98, 103, 61, 61)
+    // /system/etc/.installed_supersu_daemon
+    val systemEtcInstalledSupersuDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 122, 100, 88, 66, 108, 99, 110, 78, 49, 88, 50, 82, 104, 90, 87, 49, 118, 98, 103, 61, 61)
+    // /system/etc/init.d/99supersu
+    val systemEtcInitD99supersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 122, 107, 53, 99, 51, 86, 119, 90, 88, 74, 122, 100, 81, 61, 61)
+    // /system/etc/init.d/supersu
+    val systemEtcInitDSupersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 51, 78, 49, 99, 71, 86, 121, 99, 51, 85, 61)
+    // /system/etc/supersu.conf
+    val systemEtcSupersuConf = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 99, 51, 86, 119, 90, 88, 74, 122, 100, 83, 53, 106, 98, 50, 53, 109)
+    // /system/etc/.installed_supersu
+    val systemEtcInstalledSupersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 122, 100, 88, 66, 108, 99, 110, 78, 49)
+    // /system/etc/.has_supersu
+    val systemEtcHasSupersu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 122, 100, 88, 66, 108, 99, 110, 78, 49)
+    // /system/xbin/magisk
+    val systemXbinMagisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 52, 89, 109, 108, 117, 76, 50, 49, 104, 90, 50, 108, 122, 97, 119, 61, 61)
+    // /system/bin/.ext/magisk
+    val systemBinExtMagisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 105, 97, 87, 52, 118, 76, 109, 86, 52, 100, 67, 57, 116, 89, 87, 100, 112, 99, 50, 115, 61)
+    // /system/etc/.has_magisk_daemon
+    val systemEtcHasMagiskDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 116, 89, 87, 100, 112, 99, 50, 116, 102, 90, 71, 70, 108, 98, 87, 57, 117)
+    // /system/etc/.installed_magisk_daemon
+    val systemEtcInstalledMagiskDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 116, 89, 87, 100, 112, 99, 50, 116, 102, 90, 71, 70, 108, 98, 87, 57, 117)
+    // /system/etc/init.d/99MagiskDaemon
+    val systemEtcInitD99MagiskDaemon = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 122, 107, 53, 84, 87, 70, 110, 97, 88, 78, 114, 82, 71, 70, 108, 98, 87, 57, 117)
+    // /system/etc/init.d/99magisk
+    val systemEtcInitD99magisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 122, 107, 53, 98, 87, 70, 110, 97, 88, 78, 114)
+    // /system/etc/init.d/magisk
+    val systemEtcInitDMagisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 97, 87, 53, 112, 100, 67, 53, 107, 76, 50, 49, 104, 90, 50, 108, 122, 97, 119, 61, 61)
+    // /system/etc/magisk.conf
+    val systemEtcMagiskConf = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 98, 87, 70, 110, 97, 88, 78, 114, 76, 109, 78, 118, 98, 109, 89, 61)
+    // /system/etc/.installed_magisk
+    val systemEtcInstalledMagisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 90, 70, 57, 116, 89, 87, 100, 112, 99, 50, 115, 61)
+    // /system/etc/.has_magisk
+    val systemEtcHasMagisk = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 108, 100, 71, 77, 118, 76, 109, 104, 104, 99, 49, 57, 116, 89, 87, 100, 112, 99, 50, 115, 61)
+
+
     return mutableListOf(
       superUser.decodeToString(),
       sbinSu.decodeToString(),
@@ -59,7 +121,38 @@ private object Constants {
       systemUsrWeNeedRootSu.decodeToString(),
       cacheSu.decodeToString(),
       dataSu.decodeToString(),
-      devSu.decodeToString()
+      devSu.decodeToString(),
+      // Additional su paths
+      systemXbinDaemonsu.decodeToString(),
+      systemBinExtDaemonsu.decodeToString(),
+      systemEtcHasSuDaemon.decodeToString(),
+      systemEtcInstalledSuDaemon.decodeToString(),
+      systemEtcInitD99SuperSUDaemon.decodeToString(),
+      systemEtcInitD99su.decodeToString(),
+      systemEtcInitDSu.decodeToString(),
+      systemEtcSuConf.decodeToString(),
+      systemEtcInstalledSu.decodeToString(),
+      systemEtcHasSu.decodeToString(),
+      systemXbinSupersu.decodeToString(),
+      systemBinExtSupersu.decodeToString(),
+      systemEtcHasSupersuDaemon.decodeToString(),
+      systemEtcInstalledSupersuDaemon.decodeToString(),
+      systemEtcInitD99SuperSUDaemon.decodeToString(),
+      systemEtcInitD99supersu.decodeToString(),
+      systemEtcInitDSupersu.decodeToString(),
+      systemEtcSupersuConf.decodeToString(),
+      systemEtcInstalledSupersu.decodeToString(),
+      systemEtcHasSupersu.decodeToString(),
+      systemXbinMagisk.decodeToString(),
+      systemBinExtMagisk.decodeToString(),
+      systemEtcHasMagiskDaemon.decodeToString(),
+      systemEtcInstalledMagiskDaemon.decodeToString(),
+      systemEtcInitD99MagiskDaemon.decodeToString(),
+      systemEtcInitD99magisk.decodeToString(),
+      systemEtcInitDMagisk.decodeToString(),
+      systemEtcMagiskConf.decodeToString(),
+      systemEtcInstalledMagisk.decodeToString(),
+      systemEtcHasMagisk.decodeToString()
     )
   }
 
@@ -299,6 +392,22 @@ private object Utils {
     // com.alephzain.framaroot
     val comAlephzainFramaroot = intArrayOf(89, 50, 57, 116, 76, 109, 70, 115, 90, 88, 66, 111, 101, 109, 70, 112, 98, 105, 53, 109, 99, 109, 70, 116, 89, 88, 74, 118, 98, 51, 81, 61)
 
+    /**  **************Additional knownRootAppPackages****************** */
+    // com.roottools.rootchecker
+    val comRoottoolsRootchecker = intArrayOf(89, 50, 57, 116, 76, 110, 74, 118, 98, 51, 82, 48, 98, 50, 57, 115, 99, 121, 53, 121, 98, 50, 57, 48, 89, 50, 104, 108, 89, 50, 116, 108, 99, 103, 61, 61)
+    // com.joeykrim.rootcheck
+    val comJoeykrimRootcheck = intArrayOf(89, 50, 57, 116, 76, 109, 112, 118, 90, 88, 108, 114, 99, 109, 108, 116, 76, 110, 74, 118, 98, 51, 82, 106, 97, 71, 86, 106, 97, 119, 61, 61)
+    // com.rootuninstaller.free
+    val comRootuninstallerFree = intArrayOf(89, 50, 57, 116, 76, 110, 74, 118, 98, 51, 82, 49, 98, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 99, 105, 53, 109, 99, 109, 86, 108)
+    // com.rootuninstaller.pro
+    val comRootuninstallerPro = intArrayOf(89, 50, 57, 116, 76, 110, 74, 118, 98, 51, 82, 49, 98, 109, 108, 117, 99, 51, 82, 104, 98, 71, 120, 108, 99, 105, 53, 119, 99, 109, 56, 61)
+    // com.keramidas.TitaniumBackup
+    val comKeramidasTitaniumBackup = intArrayOf(89, 50, 57, 116, 76, 109, 116, 108, 99, 109, 70, 116, 97, 87, 82, 104, 99, 121, 53, 85, 97, 88, 82, 104, 98, 109, 108, 49, 98, 85, 74, 104, 89, 50, 116, 49, 99, 65, 61, 61)
+    // com.keramidas.TitaniumBackupPro
+    val comKeramidasTitaniumBackupPro = intArrayOf(89, 50, 57, 116, 76, 109, 116, 108, 99, 109, 70, 116, 97, 87, 82, 104, 99, 121, 53, 85, 97, 88, 82, 104, 98, 109, 108, 49, 98, 85, 74, 104, 89, 50, 116, 49, 99, 70, 66, 121, 98, 119, 61, 61)
+    // com.kingroot.kinguser
+    val comKingrootKinguser = intArrayOf(89, 50, 57, 116, 76, 109, 116, 112, 98, 109, 100, 121, 98, 50, 57, 48, 76, 109, 116, 112, 98, 109, 100, 49, 99, 50, 86, 121)
+
     val knownRootAppPackages: List<String> = mutableListOf(
       comNoshufouAndroidSu.decodeToString(),
       comThirdpartySuperuser.decodeToString(),
@@ -313,7 +422,14 @@ private object Utils {
       comKingoRoot.decodeToString(),
       comSmedialinkOneclickroot.decodeToString(),
       comZhiqupkRootGlobal.decodeToString(),
-      comAlephzainFramaroot.decodeToString()
+      comAlephzainFramaroot.decodeToString(),
+      comRoottoolsRootchecker.decodeToString(),
+      comJoeykrimRootcheck.decodeToString(),
+      comRootuninstallerFree.decodeToString(),
+      comRootuninstallerPro.decodeToString(),
+      comKeramidasTitaniumBackup.decodeToString(),
+      comKeramidasTitaniumBackupPro.decodeToString(),
+      comKingrootKinguser.decodeToString()
     )
     return PrivateUtils.hasRootManagementApps(context, knownRootAppPackages)
   }
@@ -374,6 +490,11 @@ private object Utils {
     // catch_.me_.if_.you_.can_
     val catchMeIfYouCan = intArrayOf(89, 50, 70, 48, 89, 50, 104, 102, 76, 109, 49, 108, 88, 121, 53, 112, 90, 108, 56, 117, 101, 87, 57, 49, 88, 121, 53, 106, 89, 87, 53, 102)
 
+    /**  **************Additional knownDangerousAppPackages****************** */
+
+    // com.luckypatchers.luckypatcherinstaller
+    val comLuckypatchersLuckypatcherinstaller = intArrayOf(89, 50, 57, 116, 76, 109, 120, 49, 89, 50, 116, 53, 99, 71, 70, 48, 89, 50, 104, 108, 99, 110, 77, 117, 98, 72, 86, 106, 97, 51, 108, 119, 89, 88, 82, 106, 97, 71, 86, 121, 97, 87, 53, 122, 100, 71, 70, 115, 98, 71, 86, 121)
+
     val knowDangerousAppPackages: List<String> = mutableListOf(
       comKoushikduttaRommanager.decodeToString(),
       comKoushikduttaRommanagerLicense.decodeToString(),
@@ -400,7 +521,9 @@ private object Utils {
       comXmodgame.decodeToString(),
       comCihGameCih.decodeToString(),
       comCharlesLpoqasert.decodeToString(),
-      catchMeIfYouCan.decodeToString()
+      catchMeIfYouCan.decodeToString(),
+      // additional knownDangerousAppPackages
+      comLuckypatchersLuckypatcherinstaller.decodeToString()
     )
     return PrivateUtils.hasRootManagementApps(context, knowDangerousAppPackages)
   }
@@ -425,6 +548,16 @@ private object Utils {
     // com.formyhm.hideroot
     val comFormyhmHideroot = intArrayOf(89, 50, 57, 116, 76, 109, 90, 118, 99, 109, 49, 53, 97, 71, 48, 117, 97, 71, 108, 107, 90, 88, 74, 118, 98, 51, 81, 61)
 
+    /**  **************Additional knownClockingPackages****************** */
+    // com.topjohnwu.magisk
+    val comTopjohnwuMagisk = intArrayOf(89, 50, 57, 116, 76, 110, 82, 118, 99, 71, 112, 118, 97, 71, 53, 51, 100, 83, 53, 116, 89, 87, 100, 112, 99, 50, 115, 61)
+    // com.topjohnwu.magisk.manager
+    val comTopjohnwuMagiskManager = intArrayOf(89, 50, 57, 116, 76, 110, 82, 118, 99, 71, 112, 118, 97, 71, 53, 51, 100, 83, 53, 116, 89, 87, 100, 112, 99, 50, 115, 117, 98, 87, 70, 117, 89, 87, 100, 108, 99, 103, 61, 61)
+    // com.devadvance.rootcloak2
+    val comDevadvanceRootcloak2 = intArrayOf(89, 50, 57, 116, 76, 109, 82, 108, 100, 109, 70, 107, 100, 109, 70, 117, 89, 50, 85, 117, 99, 109, 57, 118, 100, 71, 78, 115, 98, 50, 70, 114, 77, 103, 61, 61)
+    // com.formyhm.hideroot2
+    val comFormyhmHideroot2 = intArrayOf(89, 50, 57, 116, 76, 109, 90, 118, 99, 109, 49, 53, 97, 71, 48, 117, 97, 71, 108, 107, 90, 88, 74, 118, 98, 51, 81, 121)
+
     val knownClockingPackages: List<String> = mutableListOf(
       comDevadvanceRootcloak.decodeToString(),
       comDevadvanceRootcloakplus.decodeToString(),
@@ -434,7 +567,12 @@ private object Utils {
       comAmphorasHidemyroot.decodeToString(),
       comAmphorasHidemyrootadfree.decodeToString(),
       comFormyhmHiderootPremium.decodeToString(),
-      comFormyhmHideroot.decodeToString()
+      comFormyhmHideroot.decodeToString(),
+      // additional knownClockingPackages
+      comTopjohnwuMagisk.decodeToString(),
+      comTopjohnwuMagiskManager.decodeToString(),
+      comDevadvanceRootcloak2.decodeToString(),
+      comFormyhmHideroot2.decodeToString()
     )
     return PrivateUtils.hasRootManagementApps(context, knownClockingPackages)
   }
