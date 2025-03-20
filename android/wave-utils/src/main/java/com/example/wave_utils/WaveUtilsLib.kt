@@ -1,5 +1,7 @@
 package com.example.wave_utils
 
+import android.util.Base64
+
 class WaveUtilsLib {
 
     /**
@@ -10,8 +12,16 @@ class WaveUtilsLib {
 
     companion object {
         // Used to load the 'wave_utils' library on application startup.
+
+      private fun IntArray.decodeToString(): String {
+        val base64String = this.map { it.toChar() }.joinToString("")
+        return Base64.decode(base64String, Base64.DEFAULT).decodeToString()
+      }
+
         init {
-            System.loadLibrary("wave_utils")
+            // wave_utils
+            val waveUtilsString = intArrayOf(100, 50, 70, 50, 90, 86, 57, 49, 100, 71, 108, 115, 99, 119, 61, 61).decodeToString()
+            System.loadLibrary(waveUtilsString)
         }
     }
 }
