@@ -2,6 +2,7 @@ package com.example.app.security.utils
 
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.wave_utils.WaveUtilsLib
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -66,7 +67,7 @@ object Frida {
                 return true
             }
         }
-        return false
+        return WaveUtilsLib().doPathsExist(knownFridaFiles)
     }
 
     private fun isFridaLibraryLoaded(): Boolean {
