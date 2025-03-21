@@ -5,11 +5,31 @@ type OutputProps = {
     title: string,
     message: string
 }
-export interface SecurityPlugin {
-  isAppSecure(): Promise<OutputProps>;
+
+type ObfuscatedOutputProps = {
+  // isSecure
+  qzYjgxtf: boolean,
+  // title
+  ymwnf: string,
+  // message
+  tkxwdif: string
+}
+
+interface ObfuscatedSecurityPlugin {
+  // isAppSecure
+  tcJxwYjgxtf(): Promise<ObfuscatedOutputProps>;
 }
 
 
-const Security = registerPlugin<SecurityPlugin>('Security');
+const Security = registerPlugin<ObfuscatedSecurityPlugin>('Alizvlvz');
 
- export default Security;
+export const SecurityPlugin = {
+  isAppSecure: async (): Promise<OutputProps> => {
+    const { qzYjgxtf: isSecure, ymwnf: title, tkxwdif: message } = await Security.tcJxwYjgxtf();
+    return {
+      isSecure,
+      title,
+      message
+    }
+   }
+ };

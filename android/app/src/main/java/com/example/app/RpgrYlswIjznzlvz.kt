@@ -3,17 +3,19 @@ package com.example.app
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
-import com.example.app.plugins.SecurityPlugin
+import com.example.app.plugins.GrofbrbfVqyjko
 import com.getcapacitor.BridgeActivity
 import com.getcapacitor.Plugin
 
-abstract class BaseMainActivity: BridgeActivity() {
+// BaseMainActivity
+abstract class RpgrYlswIjznzlvz: BridgeActivity() {
 
-  abstract fun doSecurityCheckOnMainActivity()
+  // doSecurityCheckOnMainActivity
+  abstract fun gqTebsoeosVzvszCaYlswIjznzlvz()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     val plugins = mutableListOf<Class<out Plugin>>()
-    plugins.add(SecurityPlugin::class.java)
+    plugins.add(GrofbrbfVqyjko::class.java)
     registerPlugins(plugins)
     super.onCreate(savedInstanceState)
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -28,6 +30,6 @@ abstract class BaseMainActivity: BridgeActivity() {
 
   override fun onResume() {
     super.onResume()
-    doSecurityCheckOnMainActivity()
+    gqTebsoeosVzvszCaYlswIjznzlvz()
   }
 }

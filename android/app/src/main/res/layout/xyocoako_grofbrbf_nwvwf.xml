@@ -3,6 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  xmlns:tools="http://schemas.android.com/tools"
   android:background="@android:color/transparent"
   android:minHeight="300dp"
   android:padding="5dp">
@@ -82,7 +83,7 @@
         <!-- <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="Bank"
+             tools:text="Bank"
              android:layout_marginTop="25dp"
              android:layout_marginBottom="8dp"
              android:layout_marginEnd="8dp"
@@ -91,12 +92,13 @@
              android:textSize="24sp"/>-->
 
         <TextView
+          android:id="@+id/tv_alert_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="10dp"
           android:layout_marginTop="30dp"
           android:layout_marginBottom="8dp"
-          android:text="Security Alert !"
+          tools:text="Security Alert !"
           android:textColor="#CD0000"
           android:textSize="27sp"
           android:textStyle="bold" />
@@ -108,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:text="Accessibility Service usage"
+        tools:text="Accessibility Service usage"
         android:textAlignment="center"
         android:textColor="#FF000000"
         android:textSize="18sp"
@@ -122,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="This app identified one of the installed app in your device is using active accessibility service permission."
+        tools:text="This app identified one of the installed app in your device is using active accessibility service permission."
         android:textAlignment="center"
         android:textColor="#FF000000"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +158,7 @@
         android:layout_weight="1"
         android:backgroundTint="#ff5155"
         android:shadowColor="@color/black"
-        android:text="Skip"
+        tools:text="Skip"
         android:textColor="#FFFFFFFF"
         android:textSize="16sp" />
 
@@ -168,7 +170,7 @@
         android:layout_weight="1"
         android:backgroundTint="#ff5155"
         android:shadowColor="@color/black"
-        android:text="Close App"
+        tools:text="Close App"
         android:textColor="#FFFFFFFF"
         android:textSize="16sp" />
     </LinearLayout>
@@ -182,7 +184,7 @@
       android:layout_weight="1"
       android:backgroundTint="#ff5155"
       android:shadowColor="@color/black"
-      android:text="Open developer option settings"
+      tools:text="Open developer option settings"
       android:textColor="#FFFFFFFF"
       android:textSize="16sp" />
 

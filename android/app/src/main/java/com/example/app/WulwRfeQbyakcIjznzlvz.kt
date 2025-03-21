@@ -4,16 +4,19 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class BaseAppCompatActivity: AppCompatActivity() {
-  abstract fun onCreateBase()
-  abstract fun closeApp()
+// BaseAppCompatActivity
+abstract class WulwRfeQbyakcIjznzlvz: AppCompatActivity() {
+  // onCreateBase
+  abstract fun ayMamhzjFduf()
+  // closeApp
+  abstract fun ksuxiDrq()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    onCreateBase()
+    ayMamhzjFduf()
     val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
-        closeApp()
+        ksuxiDrq()
       }
     }
     onBackPressedDispatcher.addCallback(this, onBackPressedCallback)

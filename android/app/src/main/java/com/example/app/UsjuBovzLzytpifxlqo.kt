@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
-abstract class BaseMainApplication: Application(), Application.ActivityLifecycleCallbacks {
+// BaseMainApplication
+abstract class UsjuBovzLzytpifxlqo: Application(), Application.ActivityLifecycleCallbacks {
 
-  abstract fun doSecurityCheckOnMainApplication(activity: Activity)
+  // doSecurityCheckOnMainApplication
+  abstract fun jtWhevrhrvYcyvcFdBovzLzytpifxlqo(activity: Activity)
 
   override fun onCreate() {
     super.onCreate()
@@ -17,8 +19,8 @@ abstract class BaseMainApplication: Application(), Application.ActivityLifecycle
   override fun onActivityStarted(activity: Activity) {}
 
   override fun onActivityResumed(activity: Activity) {
-    if (activity is SecurityIssueActivity) return
-    doSecurityCheckOnMainApplication(activity)
+    if (activity is NyvmiyimVedenIjznzlvz) return
+    jtWhevrhrvYcyvcFdBovzLzytpifxlqo(activity)
   }
 
   override fun onActivityPaused(activity: Activity) {}

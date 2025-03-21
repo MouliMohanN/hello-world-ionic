@@ -3,9 +3,10 @@ package com.example.app
 import android.app.Activity
 import com.example.app.security.SecurityService
 
-class MainApplication: BaseMainApplication() {
+// MainApplication
+class BovzLzytpifxlqo: UsjuBovzLzytpifxlqo() {
 
-  override fun doSecurityCheckOnMainApplication(activity: Activity) {
+  override fun jtWhevrhrvYcyvcFdBovzLzytpifxlqo(activity: Activity) {
     SecurityService.checkAndBlockHacker(activity, { _, _ -> })
   }
 }

@@ -8,17 +8,20 @@ import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 
-@CapacitorPlugin(name = "Security")
-class SecurityPlugin: Plugin() {
+// Security
+@CapacitorPlugin(name = "Alizvlvz")
+// SecurityPlugin
+class GrofbrbfVqyjko: Plugin() {
 
   @PluginMethod
-  fun isAppSecure(call: PluginCall) {
-    // title
-    val TITLE = intArrayOf(100,71,108,48,98,71,85,61)
-    // message
-    val MESSAGE = intArrayOf(98,87,86,122,99,50,70,110,90,81,61,61)
-    // isSecure
-    val IS_SECURE = intArrayOf(97,88,78,84,90,87,78,49,99,109,85,61)
+  // isAppSecure
+  fun tcJxwYjgxtf(call: PluginCall) {
+    // title -> ymwnf
+    val TITLE = intArrayOf(101, 87, 49, 51, 98, 109, 89, 61)
+    // message -> tkxwdif
+    val MESSAGE = intArrayOf(100, 71, 116, 52, 100, 50, 82, 112, 90, 103, 61, 61)
+    // isSecure -> qzYjgxtf
+    val IS_SECURE = intArrayOf(99, 88, 112, 90, 97, 109, 100, 52, 100, 71, 89, 61)
     var isSecure = true
     SecurityService.checkAndBlockHacker(activity, { title, message ->
       val ret = JSObject()

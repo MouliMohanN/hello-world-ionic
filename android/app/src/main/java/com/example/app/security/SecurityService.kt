@@ -3,7 +3,7 @@ package com.example.app.security
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.example.app.SecurityIssueActivity
+import com.example.app.NyvmiyimVedenIjznzlvz
 import com.example.app.security.utils.AppIntegrity
 import com.example.app.security.utils.DeveloperOptions
 import com.example.app.security.utils.Emulator
@@ -164,10 +164,10 @@ object SecurityService {
   private fun launchSecurityActivity(activityContext: Activity, type: SecurityType) {
     val (title, message, isUsbDebuggingEnabled) = getTitleAndMessageForSecurityType(type)
     CoroutineScope(Dispatchers.Main).launch {
-      val intent: Intent = Intent(activityContext, SecurityIssueActivity::class.java)
-      intent.putExtra(SecurityIssueActivity.TITLE, title)
-      intent.putExtra(SecurityIssueActivity.MESSAGE, message)
-      intent.putExtra(SecurityIssueActivity.IS_USB_DEBUGGING_ENABLED, isUsbDebuggingEnabled)
+      val intent: Intent = Intent(activityContext, NyvmiyimVedenIjznzlvz::class.java)
+      intent.putExtra(NyvmiyimVedenIjznzlvz.TITLE, title)
+      intent.putExtra(NyvmiyimVedenIjznzlvz.MESSAGE, message)
+      intent.putExtra(NyvmiyimVedenIjznzlvz.IS_USB_DEBUGGING_ENABLED, isUsbDebuggingEnabled)
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       activityContext.startActivity(intent)
     }
