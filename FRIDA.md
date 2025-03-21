@@ -16,3 +16,11 @@
 
 ## Alternative to Frida
 1. Xposed
+
+
+
+
+
+frida --codeshare Q0120S/root-detection-bypass -U -f com.wave.dev
+
+frida --codeshare fdciabdul/frida-multiple-bypass -U -f com.wave.dev

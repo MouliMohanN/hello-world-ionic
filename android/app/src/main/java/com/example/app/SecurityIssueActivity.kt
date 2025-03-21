@@ -1,4 +1,4 @@
-package com.example.app.security
+package com.example.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import com.example.app.R
+import com.example.app.security.SecurityService
 import kotlin.system.exitProcess
 
-class SecurityIssueActivity : AppCompatActivity() {
+class SecurityIssueActivity : BaseAppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_security_issue)
@@ -24,9 +23,14 @@ class SecurityIssueActivity : AppCompatActivity() {
     onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
   }
 
-  override fun onStop() {
-    super.onStop()
-    finish()
+  override fun onCreateBase() {
+    setContentView(R.layout.activity_security_issue)
+    initializeViews()
+  }
+
+  override fun closeApp() {
+    finishAffinity()
+    exitProcess(0)
   }
 
   private fun initializeViews() {
@@ -59,10 +63,7 @@ class SecurityIssueActivity : AppCompatActivity() {
     }
   }
 
-  private fun closeApp() {
-    finishAffinity()
-    exitProcess(0)
-  }
+
 
   companion object {
     // title in the form of HEX

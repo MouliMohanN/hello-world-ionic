@@ -26,7 +26,7 @@
         </activity>
 
       <activity
-        android:name=".security.SecurityIssueActivity"
+        android:name=".SecurityIssueActivity"
         android:exported="false" />
 
         <provider

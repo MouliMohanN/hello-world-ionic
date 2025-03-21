@@ -3,15 +3,13 @@ package com.example.app.security
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import com.example.app.SecurityIssueActivity
 import com.example.app.security.utils.AppIntegrity
 import com.example.app.security.utils.DeveloperOptions
 import com.example.app.security.utils.Emulator
 import com.example.app.security.utils.Frida
 import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
-import com.example.app.security.utils.hash.Manifest
-import com.example.app.security.utils.hash.manifestHash
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import kotlinx.coroutines.CoroutineScope
