@@ -5,6 +5,6 @@ import com.example.app.security.SecurityService
 // MainActivity
 class YlswIjznzlvz : RpgrYlswIjznzlvz() {
   override fun gqTebsoeosVzvszCaYlswIjznzlvz() {
-    SecurityService.checkAndBlockHacker(this, { _, _ -> })
+//    SecurityService.checkAndBlockHacker(this, { _, _ -> })
   }
 }

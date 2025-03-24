@@ -23,12 +23,12 @@ class GrofbrbfVqyjko: Plugin() {
     // isSecure -> qzYjgxtf
     val IS_SECURE = intArrayOf(99, 88, 112, 90, 97, 109, 100, 52, 100, 71, 89, 61)
     var isSecure = true
-    SecurityService.checkAndBlockHacker(activity, { title, message ->
+    SecurityService.checkAndBlockHacker(activity, { ymwnf, tkxwdif ->
       val ret = JSObject()
-      if (title.isNotEmpty() && message.isNotEmpty()) {
+      if (ymwnf.isNotEmpty() && tkxwdif.isNotEmpty()) {
         isSecure = false
-        ret.put(TITLE.decodeToString(), title)
-        ret.put(MESSAGE.decodeToString(), message)
+        ret.put(TITLE.decodeToString(), ymwnf)
+        ret.put(MESSAGE.decodeToString(), tkxwdif)
       }
       ret.put(IS_SECURE.decodeToString(), isSecure)
       call.resolve(ret)

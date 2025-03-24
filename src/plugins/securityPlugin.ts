@@ -23,7 +23,7 @@ interface ObfuscatedSecurityPlugin {
 
 const Security = registerPlugin<ObfuscatedSecurityPlugin>('Alizvlvz');
 
-export const SecurityPlugin = {
+const SecurityPlugin = {
   isAppSecure: async (): Promise<OutputProps> => {
     const { qzYjgxtf: isSecure, ymwnf: title, tkxwdif: message } = await Security.tcJxwYjgxtf();
     return {
@@ -32,4 +32,6 @@ export const SecurityPlugin = {
       message
     }
    }
- };
+};
+ 
+export default SecurityPlugin;

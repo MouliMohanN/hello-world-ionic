@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {  CommonModule } from '@angular/common';
-import { SecurityPlugin } from 'src/plugins/securityPlugin';
+import SecurityPlugin from 'src/plugins/securityPlugin';
 
 @Component({
   selector: 'app-tab1',

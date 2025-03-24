@@ -83,9 +83,9 @@ object SecurityService {
   var result: SecurityType? = null
 
   private fun getSecurityType(context: Context): SecurityType {
-    if (AppIntegrity.isValid(context).not()) {
-      return SecurityType.AppIntegrity
-    }
+//    if (AppIntegrity.isValid(context).not()) {
+//      return SecurityType.AppIntegrity
+//    }
     if (DeveloperOptions.isDetected(context)) {
       return SecurityType.DeveloperOptions
     }
@@ -225,9 +225,11 @@ object SecurityService {
     cleanUp()
   }
 
+  // title -> ymwnf
+  // message -> tkxwdif
   fun checkAndBlockHacker(
     activityContext: Activity,
-    callback: (title: String, message: String) -> Unit
+    callback: (ymwnf: String, tkxwdif: String) -> Unit
   ) {
     if (isSecurityJobRunning(callback)) {
       return
