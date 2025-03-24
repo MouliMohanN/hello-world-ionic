@@ -3,6 +3,11 @@ import java.security.MessageDigest
 
 apply plugin: 'com.android.application'
 
+/**
+ * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ */
+def enableProguardInReleaseBuilds = true
+
 android {
     namespace "com.example.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -20,9 +25,17 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
+            crunchPngs false // change to true to optimize pngs
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+          minifyEnabled enableProguardInReleaseBuilds
+          shrinkResources enableProguardInReleaseBuilds
+          crunchPngs false // change to true to optimize pngs
+          proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 }
@@ -42,7 +55,7 @@ def computeFileHash(file) {
 }
 
 // Dynamically create tasks for each variant
-android.applicationVariants.all { variant ->
+/*android.applicationVariants.all { variant ->
   def variantName = variant.name // e.g., debug, release
 
   task "hashManifest${variantName.capitalize()}" {
@@ -95,7 +108,7 @@ android.applicationVariants.all { variant ->
 
   // Optionally, run this task after the variant is assembled
   tasks["assemble${variantName.capitalize()}"].finalizedBy("hashManifest${variantName.capitalize()}")
-}
+}*/
 
 tasks.withType(JavaCompile).configureEach {
   options.fork = true
