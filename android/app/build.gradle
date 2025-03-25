@@ -124,7 +124,7 @@ dependencies {
 
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation project(':capacitor-android')
-    implementation project(":emulator")
+    implementation project(":mtaqewqs")
     implementation project(":wave-utils")
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"

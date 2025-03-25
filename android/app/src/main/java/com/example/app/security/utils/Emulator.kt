@@ -5,7 +5,7 @@ import android.os.Build
 import android.telephony.TelephonyManager
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
-import com.example.emulator.EmulatorLib
+import com.example.mtaqewqs.PwdthztvOkc
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -178,7 +178,7 @@ object Emulator {
 
   fun isDetected(context: Context): Boolean {
 
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || EmulatorLib().isDetected()
+    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
   }
 
   private fun checkViaBuild(): Boolean {

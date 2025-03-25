@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.emulator'
+    namespace 'com.example.mtaqewqs'
     compileSdk 34
 
     defaultConfig {

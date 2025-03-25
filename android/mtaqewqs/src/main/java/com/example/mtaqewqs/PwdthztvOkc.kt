@@ -1,15 +1,19 @@
-package com.example.emulator
+package com.example.mtaqewqs
 
 import android.util.Base64
 
-class EmulatorLib {
+// EmulatorLib
+class PwdthztvOkc {
 
   /**
    * A native method that is implemented by the 'emulator' native library,
    * which is packaged with this application.
    */
-  external fun isDetected(): Boolean
-  external fun getResult(): String
+
+  // isDetected
+  external fun sbLlzjgwge(): Boolean
+  // getResult
+  external fun pmaXjwxnu(): String
 
   companion object {
     // Used to load the 'emulator' library on application startup.
@@ -20,8 +24,8 @@ class EmulatorLib {
     }
 
     init {
-      // emulator
-      val emulatorString = intArrayOf(90, 87, 49, 49, 98, 71, 70, 48, 98, 51, 73, 61).decodeToString()
+      // emulator -> mtaqewqs
+      val emulatorString = intArrayOf(98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61).decodeToString()
       System.loadLibrary(emulatorString)
     }
   }

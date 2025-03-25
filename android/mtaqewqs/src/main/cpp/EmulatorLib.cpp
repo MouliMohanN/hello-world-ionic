@@ -3,7 +3,7 @@
 #include "utils/header/Emulator.h"
 
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_example_emulator_EmulatorLib_isDetected(
+Java_com_example_mtaqewqs_PwdthztvOkc_sbLlzjgwge__(
     JNIEnv *env,
     jobject /* this */)
 {
@@ -12,7 +12,7 @@ Java_com_example_emulator_EmulatorLib_isDetected(
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_emulator_EmulatorLib_getResult(JNIEnv *env, jobject thiz)
+Java_com_example_mtaqewqs_PwdthztvOkc_pmaXjwxnu(JNIEnv *env, jobject thiz)
 {
     return env->NewStringUTF(Emulator().getResult().c_str());
 }
