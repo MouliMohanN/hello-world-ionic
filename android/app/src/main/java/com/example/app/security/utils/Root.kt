@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
+import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import com.example.gjdl_zxlnt.IlfnCaoqwOkc
@@ -654,11 +655,15 @@ object Root {
   }
 
   fun isDetected(context: Context): Boolean {
-    return hasBuildTags()
+    val isDetected = hasBuildTags()
       || hasSuperUserPaths()
       || isSuBinaryRunning()
       || hasRootManagementApps(context)
       || hasDangerousProps()
       || hasSuperUserPathsNative()
+    if (isDetected) {
+      EncryptedStorage.saveSecretData(context, "deviceroot_detected", "true")
+    }
+    return isDetected || EncryptedStorage.getSecretData(context, "deviceroot_detected") == "true"
   }
 }

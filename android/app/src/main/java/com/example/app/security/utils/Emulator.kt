@@ -3,6 +3,7 @@ package com.example.app.security.utils
 import android.content.Context
 import android.os.Build
 import android.telephony.TelephonyManager
+import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import com.example.mtaqewqs.PwdthztvOkc
@@ -177,8 +178,11 @@ private object Firebase {
 object Emulator {
 
   fun isDetected(context: Context): Boolean {
-
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
+    val isDetected = checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
+    if (isDetected) {
+      EncryptedStorage.saveSecretData(context, "emulator_detected", "true")
+    }
+    return isDetected || EncryptedStorage.getSecretData(context, "emulator_detected") == "true"
   }
 
   private fun checkViaBuild(): Boolean {
