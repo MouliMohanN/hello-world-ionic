@@ -1,14 +1,16 @@
-package com.example.wave_utils
+package com.example.gjdl_zxlnt
 
 import android.util.Base64
 
-class WaveUtilsLib {
+// WaveUtilsLib
+class IlfnCaoqwOkc {
 
     /**
      * A native method that is implemented by the 'wave_utils' native library,
      * which is packaged with this application.
      */
-    external fun doPathsExist(paths: Array<String>): Boolean
+    // doPathsExist
+    external fun pzZjboyJbluu(paths: Array<String>): Boolean
 
     companion object {
         // Used to load the 'wave_utils' library on application startup.
@@ -19,8 +21,8 @@ class WaveUtilsLib {
       }
 
         init {
-            // wave_utils
-            val waveUtilsString = intArrayOf(100, 50, 70, 50, 90, 86, 57, 49, 100, 71, 108, 115, 99, 119, 61, 61).decodeToString()
+            // wave_utils -> gjdl_zxlnt
+            val waveUtilsString = intArrayOf(90, 50, 112, 107, 98, 70, 57, 54, 101, 71, 120, 117, 100, 65, 61, 61).decodeToString()
             System.loadLibrary(waveUtilsString)
         }
     }

@@ -4,5 +4,5 @@ project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor
 include ':mtaqewqs'
 project(':mtaqewqs').projectDir = new File('./mtaqewqs/')
 apply from: 'capacitor.settings.gradle'
-include ':wave-utils'
-project(':wave-utils').projectDir = new File('./wave-utils/')
+include ':gjdl-zxlnt'
+project(':gjdl-zxlnt').projectDir = new File('./gjdl-zxlnt/')

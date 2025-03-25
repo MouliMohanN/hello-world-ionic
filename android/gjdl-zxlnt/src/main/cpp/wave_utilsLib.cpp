@@ -7,6 +7,6 @@
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_com_example_wave_1utils_WaveUtilsLib_doPathsExist(JNIEnv *env, jobject thiz, jobjectArray paths) {
+Java_com_example_gjdl_1zxlnt_IlfnCaoqwOkc_pzZjboyJbluu___3Ljava_lang_String_2(JNIEnv *env, jobject thiz, jobjectArray paths) {
    return checkIfPathsExists(env, paths);
 }

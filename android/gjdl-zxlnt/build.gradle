@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-  namespace 'com.example.wave_utils'
+  namespace 'com.example.gjdl_zxlnt'
   compileSdk 35
 
   defaultConfig {
