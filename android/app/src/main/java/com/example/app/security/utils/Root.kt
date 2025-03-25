@@ -12,6 +12,23 @@ import java.io.File
 import java.io.IOException
 import java.util.Scanner
 
+private object RootStorageConstants {
+  fun getKeyName(): String {
+    // deviceroot_detected -> wwmyrseazd_llzjgwge
+    return intArrayOf(100, 51, 100, 116, 101, 88, 74, 122, 90, 87, 70, 54, 90, 70, 57, 115, 98, 72, 112, 113, 90, 51, 100, 110, 90, 81, 61, 61).decodeToString()
+  }
+
+  fun getTrueValue(): String {
+    // detectionhasbeenfoundforrrot -> fftdaqejhasjrtsarzewlmuwvuqu
+    return intArrayOf(90, 109, 90, 48, 90, 71, 70, 120, 90, 87, 112, 111, 89, 88, 78, 113, 99, 110, 82, 122, 89, 88, 74, 54, 90, 88, 100, 115, 98, 88, 86, 51, 100, 110, 86, 120, 100, 81, 61, 61).decodeToString()
+  }
+
+  fun getFalseValue(): String {
+    // detectionnotfoundforrrot -> bbpzwmafdccgrzewlmuwvuqu
+    return intArrayOf(89, 109, 74, 119, 101, 110, 100, 116, 89, 87, 90, 107, 89, 50, 78, 110, 99, 110, 112, 108, 100, 50, 120, 116, 100, 88, 100, 50, 100, 88, 70, 49).decodeToString()
+  }
+}
+
 private object Constants {
   fun getSuPaths(): List<String> {
     // /system/app/Superuser.apk
@@ -662,8 +679,8 @@ object Root {
       || hasDangerousProps()
       || hasSuperUserPathsNative()
     if (isDetected) {
-      EncryptedStorage.saveSecretData(context, "deviceroot_detected", "true")
+      EncryptedStorage.saveSecretData(context, RootStorageConstants.getKeyName(), RootStorageConstants.getTrueValue())
     }
-    return isDetected || EncryptedStorage.getSecretData(context, "deviceroot_detected") == "true"
+    return isDetected || EncryptedStorage.getSecretData(context, RootStorageConstants.getKeyName()) == RootStorageConstants.getTrueValue()
   }
 }
