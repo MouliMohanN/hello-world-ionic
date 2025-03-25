@@ -88,6 +88,12 @@
     public static int e(...);
 }
 
+# Remove all System.out println() or println()
+-assumenosideeffects class java.io.PrintStream {
+     public void println(%);
+     public void println(**);
+ }
+
 # Additional security measures
 -keepclassmembers class * implements java.io.Serializable {
     private static final java.io.ObjectStreamField[] serialPersistentFields;
