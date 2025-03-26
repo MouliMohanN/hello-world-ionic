@@ -3,12 +3,30 @@ package com.example.app.security.utils
 import android.content.Context
 import android.os.Build
 import android.telephony.TelephonyManager
+import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
-import com.example.emulator.EmulatorLib
+import com.example.mtaqewqs.PwdthztvOkc
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+
+private object EmulatorStorageConstants {
+  fun getKeyName(): String {
+    // emulator_detected - vcjznfzb_llzjgwge
+    return intArrayOf(100, 109, 78, 113, 101, 109, 53, 109, 101, 109, 74, 102, 98, 71, 120, 54, 97, 109, 100, 51, 90, 50, 85, 61).decodeToString()
+  }
+
+  fun getTrueValue(): String {
+    // detectionhasbeenfoundforemulator - jjxheuinlewnvxwevdiapqyamtaqewqs
+    return intArrayOf(97, 109, 112, 52, 97, 71, 86, 49, 97, 87, 53, 115, 90, 88, 100, 117, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61).decodeToString()
+  }
+
+  fun getFalseValue(): String {
+    // detectionisnotfoundforemulator - hhvfcsgljdmggkvdiapqyamtaqewqs
+    return intArrayOf(97, 71, 104, 50, 90, 109, 78, 122, 90, 50, 120, 113, 90, 71, 49, 110, 90, 50, 116, 50, 90, 71, 108, 104, 99, 72, 70, 53, 89, 87, 49, 48, 89, 88, 70, 108, 100, 51, 70, 122).decodeToString()
+  }
+}
 
 private object Files {
 
@@ -177,8 +195,11 @@ private object Firebase {
 object Emulator {
 
   fun isDetected(context: Context): Boolean {
-
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || EmulatorLib().isDetected()
+    val isDetected = checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
+    if (isDetected) {
+      EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getTrueValue())
+    }
+    return isDetected || EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName()) == EmulatorStorageConstants.getTrueValue()
   }
 
   private fun checkViaBuild(): Boolean {

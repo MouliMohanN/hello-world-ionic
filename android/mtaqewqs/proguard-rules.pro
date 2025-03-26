@@ -20,14 +20,13 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Advanced Optimization and Aggressive Obfuscation Settings
 -optimizationpasses 9
 -allowaccessmodification
 -dontpreverify
 -repackageclasses ''
-#-flattenpackagehierarchy ''
-#-overloadaggressively
-#-useuniqueclassmembernames
+-flattenpackagehierarchy ''
+-overloadaggressively
+-useuniqueclassmembernames
 -mergeinterfacesaggressively
 
 # Advanced code optimization
@@ -59,25 +58,6 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 
-# Keep javax.annotation classes used by Tink
--keep class javax.annotation.** { *; }
--keep class javax.annotation.concurrent.** { *; }
-
-# Keep all Tink classes and their members
--keep class com.google.crypto.tink.** { *; }
--keep interface com.google.crypto.tink.** { *; }
-
-# Ignore Google API Client Classes
--dontwarn com.google.api.client.**
-
-# Keep Joda-Time class
--keep class org.joda.time.** { *; }
-
-# Keep Nullable, GuardedBy and ThreadSafe annotation
--keep @javax.annotation.Nullable class *
--keep @javax.annotation.concurrent.GuardedBy class *
--keep @javax.annotation.concurrent.ThreadSafe class *
-
 # Remove all logging
 -assumenosideeffects class android.util.Log {
     public static boolean isLoggable(java.lang.String, int);
@@ -87,12 +67,6 @@
     public static int w(...);
     public static int e(...);
 }
-
-# Remove all System.out println() or println()
--assumenosideeffects class java.io.PrintStream {
-     public void println(%);
-     public void println(**);
- }
 
 # Additional security measures
 -keepclassmembers class * implements java.io.Serializable {
