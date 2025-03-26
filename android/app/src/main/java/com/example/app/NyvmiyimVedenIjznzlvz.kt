@@ -38,7 +38,8 @@ class NyvmiyimVedenIjznzlvz : WulwRfeQbyakcIjznzlvz() {
       }
       val openDevOptionSettingsButton = findViewById<Button>(R.id.btn_open_dev_option_settings)
       openDevOptionSettingsButton.setOnClickListener { view: View? ->
-        startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS))
+//        Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS = "android.settings.APPLICATION_DEVELOPMENT_SETTINGS"
+        startActivity(Intent(intArrayOf(89, 87, 53, 107, 99, 109, 57, 112, 90, 67, 53, 122, 90, 88, 82, 48, 97, 87, 53, 110, 99, 121, 53, 66, 85, 70, 66, 77, 83, 85, 78, 66, 86, 69, 108, 80, 84, 108, 57, 69, 82, 86, 90, 70, 84, 69, 57, 81, 84, 85, 86, 79, 86, 70, 57, 84, 82, 86, 82, 85, 83, 85, 53, 72, 85, 119, 61, 61).decodeToString()))
       }
       if (extras.getBoolean(IS_USB_DEBUGGING_ENABLED)) {
         skipButton.visibility = View.VISIBLE
