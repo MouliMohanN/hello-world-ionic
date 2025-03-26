@@ -52,11 +52,11 @@ object Obfuscation {
    }
 
   object GenericErrorInfo {
-    // Error Code -
-    val title = intArrayOf(82, 88, 74, 121, 98, 51, 73, 103, 81, 50, 57, 107, 90, 83, 65, 116, 73, 65, 61, 61).decodeToString()
-
     // App or device not supported
-    val message = intArrayOf(81, 88, 66, 119, 73, 71, 57, 121, 73, 71, 82, 108, 100, 109, 108, 106, 90, 83, 66, 117, 98, 51, 81, 103, 99, 51, 86, 119, 99, 71, 57, 121, 100, 71, 86, 107).decodeToString()
+    val title = intArrayOf(81, 88, 66, 119, 73, 71, 57, 121, 73, 71, 82, 108, 100, 109, 108, 106, 90, 83, 66, 117, 98, 51, 81, 103, 99, 51, 86, 119, 99, 71, 57, 121, 100, 71, 86, 107).decodeToString()
+
+    // Error Code -
+    val message = intArrayOf(82, 88, 74, 121, 98, 51, 73, 103, 81, 50, 57, 107, 90, 83, 65, 116, 73, 65, 61, 61).decodeToString()
   }
 
   object None {
@@ -119,8 +119,8 @@ object SecurityService {
       SecurityType.ROOT,
       SecurityType.SYSTEM_CALLS,
       SecurityType.EMULATOR -> Triple(
-        "${Obfuscation.GenericErrorInfo.title} $type",
-        Obfuscation.GenericErrorInfo.message,
+        Obfuscation.GenericErrorInfo.title,
+        "${Obfuscation.GenericErrorInfo.message} $type",
         false
       )
 
