@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.example.app.NyvmiyimVedenIjznzlvz
+import com.example.app.security.utils.AdbConnectionChecker
 import com.example.app.security.utils.AppIntegrity
 import com.example.app.security.utils.DeveloperOptions
 import com.example.app.security.utils.Emulator
@@ -41,6 +42,9 @@ object SecurityType {
 
   // STD_07
   val NONE = intArrayOf(85, 49, 82, 69, 88, 122, 65, 51).decodeToString()
+
+  // STD_08
+  val ADB_DETECTED = intArrayOf(85, 49, 82, 69, 88, 122, 65, 52).decodeToString()
 }
 
 object Obfuscation {
@@ -76,6 +80,7 @@ object SecurityService {
 
   private fun getSecurityType(context: Context): String {
     val isDeveloperOptionsDetected = DeveloperOptions.isDetected(context)
+    val isAdbConnected = AdbConnectionChecker.isDeviceConnected(context)
     val isAppIntegrityNotValid = AppIntegrity.isValid(context).not()
     val isRootDetected = Root.isDetected(context)
     val isFridaDetected = Frida.isDetected()
@@ -84,6 +89,9 @@ object SecurityService {
 
     if (isDeveloperOptionsDetected) {
       return SecurityType.DEVELOPER_OPTIONS
+    }
+    if (isAdbConnected) {
+      return SecurityType.ADB_DETECTED
     }
     if (isAppIntegrityNotValid) {
       return SecurityType.APP_INTEGRITY
@@ -114,6 +122,7 @@ object SecurityService {
         true
       )
 
+      SecurityType.ADB_DETECTED,
       SecurityType.APP_INTEGRITY,
       SecurityType.FRIDA,
       SecurityType.ROOT,
