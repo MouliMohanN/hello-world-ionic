@@ -7,6 +7,6 @@ import com.example.app.security.SecurityService
 class BovzLzytpifxlqo: UsjuBovzLzytpifxlqo() {
 
   override fun jtWhevrhrvYcyvcFdBovzLzytpifxlqo(activity: Activity) {
-//    SecurityService.checkAndBlockHacker(activity, { _, _ -> })
+    SecurityService.checkAndBlockHacker(activity, { _, _ -> })
   }
 }

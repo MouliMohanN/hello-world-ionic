@@ -49,7 +49,7 @@ def computeFileHash(file) {
 }
 
 // Dynamically create tasks for each variant
-/*android.applicationVariants.all { variant ->
+android.applicationVariants.all { variant ->
   def variantName = variant.name // e.g., debug, release
 
   task "hashManifest${variantName.capitalize()}" {
@@ -102,7 +102,7 @@ def computeFileHash(file) {
 
   // Optionally, run this task after the variant is assembled
   tasks["assemble${variantName.capitalize()}"].finalizedBy("hashManifest${variantName.capitalize()}")
-}*/
+}
 
 tasks.withType(JavaCompile).configureEach {
   options.fork = true
