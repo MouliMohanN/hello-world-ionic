@@ -67,7 +67,10 @@ object Frida {
                 return true
             }
         }
-        return IlfnCaoqwOkc().pzZjboyJbluu(knownFridaFiles)
+        val pathValueString = IlfnCaoqwOkc().pzZjboyJbluu(knownFridaFiles)
+        // pathsexist - zjboyjbluu
+        val trueValueString = intArrayOf(101, 109, 112, 105, 98, 51, 108, 113, 89, 109, 120, 49, 100, 81, 61, 61).decodeToString()
+        return pathValueString == trueValueString
     }
 
     private fun isFridaLibraryLoaded(): Boolean {

@@ -6,6 +6,7 @@ import android.telephony.TelephonyManager
 import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.app.utils.isNull
 import com.example.mtaqewqs.PwdthztvOkc
 import java.io.File
 import java.io.FileInputStream
@@ -191,16 +192,32 @@ private object Firebase {
   }
 }
 
+private object EmulatorLibNativeContants {
+  fun getTrueValue(): String {
+    // detectionhasbeenfoundforemulator - jjxheuinlewnvxwevdiapqyamtaqewqs
+    return intArrayOf(97, 109, 112, 52, 97, 71, 86, 49, 97, 87, 53, 115, 90, 88, 100, 117, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61).decodeToString()
+  }
+
+  fun getFalseValue(): String {
+    // detectionhasnotbeenfoundforemulator - mmakhxlqohzqkkovxwevdiapqyamtaqewqs
+    return intArrayOf(98, 87, 49, 104, 97, 50, 104, 52, 98, 72, 70, 118, 97, 72, 112, 120, 97, 50, 116, 118, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61).decodeToString()
+  }
+}
+
+private object EmulatorLibNative {
+  fun isDetected(): Boolean {
+    val hasDetections = PwdthztvOkc().sbLlzjgwge()
+    return hasDetections == EmulatorLibNativeContants.getTrueValue()
+  }
+
+  fun isCodeNotMockedByFrida(): Boolean {
+    val hasDetections = PwdthztvOkc().sbLlzjgwge()
+    return  hasDetections == EmulatorLibNativeContants.getTrueValue() || hasDetections == EmulatorLibNativeContants.getFalseValue()
+  }
+}
+
 
 object Emulator {
-
-  fun isDetected(context: Context): Boolean {
-    val isDetected = checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
-    if (isDetected) {
-      EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getTrueValue())
-    }
-    return isDetected || EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName()) == EmulatorStorageConstants.getTrueValue()
-  }
 
   private fun checkViaBuild(): Boolean {
     // genymotion
@@ -270,5 +287,25 @@ object Emulator {
       || Build.PRODUCT.lowercase().contains(nox.decodeToString())
       || Build.SERIAL.lowercase().contains(nox.decodeToString())
       || (Build.BRAND.lowercase().contains(generic.decodeToString()) && Build.DEVICE.lowercase().contains(generic.decodeToString())))
+  }
+
+  fun isNaitveLibValid(): Boolean {
+    return EmulatorLibNative.isCodeNotMockedByFrida()
+  }
+
+  fun isEncryptedStorageValid(context: Context): Boolean {
+    val secretData = EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName())
+    if (secretData.isNull()) {
+      EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getFalseValue())
+    }
+    return secretData == EmulatorStorageConstants.getTrueValue() || secretData == EmulatorStorageConstants.getFalseValue()
+  }
+
+  fun isDetected(context: Context): Boolean {
+    val isDetected = checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || EmulatorLibNative.isDetected()
+    if (isDetected) {
+      EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getTrueValue())
+    }
+    return isDetected || EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName()) == EmulatorStorageConstants.getTrueValue()
   }
 }

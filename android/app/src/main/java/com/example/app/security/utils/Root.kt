@@ -7,6 +7,7 @@ import android.os.Build
 import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.app.utils.isNull
 import com.example.gjdl_zxlnt.IlfnCaoqwOkc
 import java.io.File
 import java.io.IOException
@@ -633,6 +634,33 @@ private object Utils {
 
 
 
+private object RootLibNativeContants {
+  fun getTrueValueString(): String {
+    // pathsexist - zjboyjbluu
+    return intArrayOf(101, 109, 112, 105, 98, 51, 108, 113, 89, 109, 120, 49, 100, 81, 61, 61).decodeToString()
+  }
+
+  fun getFalseValueString(): String {
+    // pathsdoesnotexist - gqivfpzobvvzjbluu
+    return intArrayOf(90, 51, 70, 112, 100, 109, 90, 119, 101, 109, 57, 105, 100, 110, 90, 54, 97, 109, 74, 115, 100, 88, 85, 61).decodeToString()
+  }
+}
+
+private object RootLibNative {
+  fun isCodeNotMockedByFrida(): Boolean {
+    // /system/app/Superuser.apk
+    val superUserSamplePath = intArrayOf(76,51,78,53,99,51,82,108,98,83,57,104,99,72,65,118,85,51,86,119,90,88,74,49,99,50,86,121,76,109,70,119,97,119,61,61)
+
+    val waveUtilsLib = IlfnCaoqwOkc()
+    val pathValueString = waveUtilsLib.pzZjboyJbluu(mutableListOf<String>(superUserSamplePath.decodeToString()).toTypedArray())
+    return pathValueString == RootLibNativeContants.getTrueValueString() || pathValueString == RootLibNativeContants.getFalseValueString()
+  }
+}
+
+
+
+
+
 
 object Root {
 
@@ -666,9 +694,21 @@ object Root {
 
   private fun hasSuperUserPathsNative(): Boolean {
     val waveUtilsLib = IlfnCaoqwOkc()
-    return waveUtilsLib.pzZjboyJbluu(Constants.getSuPaths().toTypedArray())
-      || waveUtilsLib.pzZjboyJbluu(Constants.getBusyBoxPaths().toTypedArray())
-      || waveUtilsLib.pzZjboyJbluu(Constants.getMagiskPaths().toTypedArray())
+    return waveUtilsLib.pzZjboyJbluu(Constants.getSuPaths().toTypedArray()) == RootLibNativeContants.getTrueValueString()
+      || waveUtilsLib.pzZjboyJbluu(Constants.getBusyBoxPaths().toTypedArray()) == RootLibNativeContants.getTrueValueString()
+      || waveUtilsLib.pzZjboyJbluu(Constants.getMagiskPaths().toTypedArray()) == RootLibNativeContants.getTrueValueString()
+  }
+
+  fun isNativeLibValid(): Boolean {
+    return RootLibNative.isCodeNotMockedByFrida()
+  }
+
+  fun isEncryptedStorageValid(context: Context): Boolean {
+    val secretData = EncryptedStorage.getSecretData(context, RootStorageConstants.getKeyName())
+    if (secretData.isNull()) {
+      EncryptedStorage.saveSecretData(context, RootStorageConstants.getKeyName(), RootStorageConstants.getFalseValue())
+    }
+    return secretData == RootStorageConstants.getFalseValue() || secretData == RootStorageConstants.getTrueValue()
   }
 
   fun isDetected(context: Context): Boolean {

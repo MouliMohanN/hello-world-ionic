@@ -341,9 +341,17 @@ void Emulator::findEmulatorMemory() {
     }
 }
 
-bool Emulator::isDetected() {
+std::string Emulator::hasDetections() {
+    // detectionhasbeenfoundforemulator - jjxheuinlewnvxwevdiapqyamtaqewqs
+    std::vector<int> trueValue = {97, 109, 112, 52, 97, 71, 86, 49, 97, 87, 53, 115, 90, 88, 100, 117, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61};
+    std::string trueValueString = getStringFromAscii(trueValue);
+
+    // detectionhasnotbeenfoundforemulator - mmakhxlqohzqkkovxwevdiapqyamtaqewqs
+    std::vector<int> falseValue = {98, 87, 49, 104, 97, 50, 104, 52, 98, 72, 70, 118, 97, 72, 112, 120, 97, 50, 116, 118, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61};
+    std::string falseValueString = getStringFromAscii(falseValue);
+
     if (!detections.empty()) {
-        return true;
+        return trueValueString;
     }
     checkHardwareProps();
     checkMounts();
@@ -352,8 +360,10 @@ bool Emulator::isDetected() {
     checkCPUArchitecture();
     checkArmTranslation();
     findEmulatorMemory();
-
-    return !detections.empty();
+    if (detections.empty()) {
+        return falseValueString;
+    }
+    return trueValueString;
 }
 
 std::string Emulator::getResult() {

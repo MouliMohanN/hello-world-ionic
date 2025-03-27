@@ -11,7 +11,7 @@ class PwdthztvOkc {
    */
 
   // isDetected
-  external fun sbLlzjgwge(): Boolean
+  external fun sbLlzjgwge(): String
   // getResult
   external fun pmaXjwxnu(): String
 

@@ -9,7 +9,7 @@ class Emulator
     static std::vector<std::string> detections;
 
 public:
-    static bool isDetected();
+    static std::string hasDetections();
     static std::string getResult();
 
 private:

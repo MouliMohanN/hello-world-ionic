@@ -6,7 +6,8 @@
 #define ANDROID_WAVE_UTILS_H
 
 #include <jni.h>
+#include <string>
 
-bool checkIfPathsExists(JNIEnv *env, jobjectArray paths);
+std::string checkIfPathsExists(JNIEnv *env, jobjectArray paths);
 
 #endif //ANDROID_WAVE_UTILS_H

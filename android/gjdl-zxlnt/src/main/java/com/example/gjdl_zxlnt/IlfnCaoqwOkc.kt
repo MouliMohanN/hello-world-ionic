@@ -10,7 +10,7 @@ class IlfnCaoqwOkc {
      * which is packaged with this application.
      */
     // doPathsExist
-    external fun pzZjboyJbluu(paths: Array<String>): Boolean
+    external fun pzZjboyJbluu(paths: Array<String>): String
 
     companion object {
         // Used to load the 'wave_utils' library on application startup.

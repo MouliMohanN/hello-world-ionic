@@ -6,7 +6,7 @@
 #include "header/wave_utils.h"
 
 extern "C"
-JNIEXPORT jboolean JNICALL
+JNIEXPORT jstring JNICALL
 Java_com_example_gjdl_1zxlnt_IlfnCaoqwOkc_pzZjboyJbluu___3Ljava_lang_String_2(JNIEnv *env, jobject thiz, jobjectArray paths) {
-   return checkIfPathsExists(env, paths);
+    return env->NewStringUTF(checkIfPathsExists(env, paths).c_str());
 }

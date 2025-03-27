@@ -6,6 +6,6 @@ import com.example.app.security.utils.hash.Manifest
 object AppIntegrity {
 
   fun isValid(context: Context): Boolean {
-    return Manifest.isValid(context)
+    return Manifest.isValid(context) && Root.isEncryptedStorageValid(context) && Emulator.isEncryptedStorageValid(context) && Root.isNativeLibValid() && Emulator.isNaitveLibValid()
   }
 }

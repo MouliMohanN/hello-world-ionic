@@ -2,13 +2,12 @@
 #include <string>
 #include "utils/header/Emulator.h"
 
-extern "C" JNIEXPORT jboolean JNICALL
+extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_mtaqewqs_PwdthztvOkc_sbLlzjgwge__(
     JNIEnv *env,
     jobject /* this */)
 {
-
-    return Emulator().isDetected();
+   return env->NewStringUTF(Emulator().hasDetections().c_str());
 }
 
 extern "C" JNIEXPORT jstring JNICALL
