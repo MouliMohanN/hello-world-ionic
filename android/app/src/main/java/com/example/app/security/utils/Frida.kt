@@ -82,9 +82,9 @@ object Frida {
         try {
             // /proc/self/maps
             val maps = intArrayOf(76,51,66,121,98,50,77,118,99,50,86,115,90,105,57,116,89,88,66,122)
-            // println("${SECURITY_LOG_TAG.decodeToString()} - isFridaLibraryLoaded - \n" +
+            /*println("${SECURITY_LOG_TAG.decodeToString()} - isFridaLibraryLoaded - \n" +
                     "knownFridaLibraries - ${knownFridaLibraries.joinToString(", ")}\n" +
-                    "maps - ${maps.decodeToString()}")
+                    "maps - ${maps.decodeToString()}")*/
             BufferedReader(FileReader(maps.decodeToString())).use { reader ->
                 var isLibraryLoaded = false
                 reader.forEachLine { line ->
