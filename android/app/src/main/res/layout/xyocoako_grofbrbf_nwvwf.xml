@@ -150,7 +150,7 @@
       android:orientation="horizontal"
       android:weightSum="2">
 
-      <Button
+     <!-- <Button
         android:id="@+id/btn_skip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
         android:shadowColor="@color/black"
         tools:text="Skip"
         android:textColor="#FFFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp" />-->
 
       <Button
         android:id="@+id/btn_close_app"

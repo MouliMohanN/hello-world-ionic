@@ -5,7 +5,6 @@ import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.app.security.SecurityService
 import com.example.app.utils.decodeToString
 
 // SecurityIssueActivity
@@ -31,20 +30,20 @@ class NyvmiyimVedenIjznzlvz : WulwRfeQbyakcIjznzlvz() {
       issueTitle.text = extras.getString(TITLE)
       val issueDescription = findViewById<TextView>(R.id.tv_issue_description)
       issueDescription.text = extras.getString(MESSAGE)
-      val skipButton = findViewById<Button>(R.id.btn_skip)
-      skipButton.setOnClickListener { view: View? ->
-        SecurityService.onSkipButtonClicked()
-        finish()
-      }
+//      val skipButton = findViewById<Button>(R.id.btn_skip)
+//      skipButton.setOnClickListener { view: View? ->
+//        SecurityService.onSkipButtonClicked()
+//        finish()
+//      }
       val openDevOptionSettingsButton = findViewById<Button>(R.id.btn_open_dev_option_settings)
       openDevOptionSettingsButton.setOnClickListener { view: View? ->
         startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS))
       }
       if (extras.getBoolean(IS_USB_DEBUGGING_ENABLED)) {
-        skipButton.visibility = View.VISIBLE
+//        skipButton.visibility = View.VISIBLE
         openDevOptionSettingsButton.visibility = View.VISIBLE
       } else {
-        skipButton.visibility = View.GONE
+//        skipButton.visibility = View.GONE
         openDevOptionSettingsButton.visibility = View.GONE
       }
     }
@@ -61,10 +60,10 @@ class NyvmiyimVedenIjznzlvz : WulwRfeQbyakcIjznzlvz() {
     val alertTitleString = intArrayOf(85, 50, 86, 106, 100, 88, 74, 112, 100, 72, 107, 103, 81, 87, 120, 108, 99, 110, 81, 103, 73, 81, 61, 61).decodeToString()
     alertTitle.text = alertTitleString
 
-    val skipButton = findViewById<Button>(R.id.btn_skip)
-    // Skip
-    val skipButtonString = intArrayOf(85, 50, 116, 112, 99, 65, 61, 61)
-    skipButton.text = skipButtonString.decodeToString()
+//    val skipButton = findViewById<Button>(R.id.btn_skip)
+//    // Skip
+//    val skipButtonString = intArrayOf(85, 50, 116, 112, 99, 65, 61, 61)
+//    skipButton.text = skipButtonString.decodeToString()
 
     val closeAppButton = findViewById<Button>(R.id.btn_close_app)
     // Close App
