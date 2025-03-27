@@ -90,9 +90,26 @@
 
 # Remove all System.out println() or println()
 -assumenosideeffects class java.io.PrintStream {
-     public void println(%);
-     public void println(**);
- }
+    public void println();
+    public void println(java.lang.String);
+    public void println(java.lang.Object);
+    public void println(boolean);
+    public void println(char);
+    public void println(int);
+    public void println(long);
+    public void println(float);
+    public void println(double);
+    public void println(char[]);
+}
+
+# Remove all System.out.println() calls (check tool support for this wildcard!)
+-assumenosideeffects class java.io.PrintStream {
+    public void println(...);
+}
+
+-keep,allowshrinking,allowobfuscation class java.io.PrintStream {
+    public void println(...);  # Allow removal even if reflected
+}
 
 # Additional security measures
 -keepclassmembers class * implements java.io.Serializable {
