@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {  CommonModule } from '@angular/common';
-import SecurityPlugin from 'src/plugins/securityPlugin';
+import SecurityPlugin, { SecurityType } from 'src/plugins/securityPlugin';
 
 @Component({
   selector: 'app-tab1',
@@ -14,7 +14,7 @@ import SecurityPlugin from 'src/plugins/securityPlugin';
 export class Tab1Page {
 
   message: string = 'Initial Value'
-  isSecure: boolean = false
+  type: string = 'NULL'
   title: string = ''
   description: string = ''
 
@@ -35,14 +35,18 @@ export class Tab1Page {
     // setTimeout(() => {
     //   Security.isAppSecure()
     // }, 120)
-    const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await SecurityPlugin.isAppSecure();
-    // const isAppSecure = true
-    // const alertTitle = 'Title'
-    // const alertDescription = 'Desc'
-    this.isSecure = !this.isSecure
-    if (alertTitle && alertDescription) {
+    const { type: securityType, title: alertTitle, message: alertDescription } = await SecurityPlugin.isAppSecure();
+    this.type = securityType
+    if (securityType === SecurityType.NONE) {
+      this.title = 'All Good'
+      this.description = ""
+    } else if (securityType === SecurityType.DEVELOPER_OPTIONS) {
+      this.title = "It is okay to use the app"
+      this.description = ""
+    } else {
       this.title = alertTitle
       this.description = alertDescription
     }
+    
   }
 }

@@ -1,14 +1,19 @@
- import { registerPlugin } from '@capacitor/core';
+import { registerPlugin } from '@capacitor/core';
+ 
+export const SecurityType = {
+  NONE: 'STD_07',
+  DEVELOPER_OPTIONS: 'STD_01'
+}
 
 type OutputProps = {
-    isSecure: boolean,
+    type: string,
     title: string,
     message: string
 }
 
 type ObfuscatedOutputProps = {
-  // isSecure
-  qzYjgxtf: boolean,
+  // type
+  xbrf: string,
   // title
   ymwnf: string,
   // message
@@ -25,9 +30,9 @@ const Security = registerPlugin<ObfuscatedSecurityPlugin>('Alizvlvz');
 
 const SecurityPlugin = {
   isAppSecure: async (): Promise<OutputProps> => {
-    const { qzYjgxtf: isSecure, ymwnf: title, tkxwdif: message } = await Security.tcJxwYjgxtf();
+    const { xbrf: type, ymwnf: title, tkxwdif: message } = await Security.tcJxwYjgxtf();
     return {
-      isSecure,
+      type,
       title,
       message
     }

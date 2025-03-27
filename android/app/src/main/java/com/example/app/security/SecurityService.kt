@@ -71,7 +71,7 @@ object Obfuscation {
 object SecurityService {
 
   var securityJob: Job? = null
-  var fifoQueue: Queue<(title: String, message: String) -> Unit>? = null
+  var fifoQueue: Queue<(type: String, title: String, message: String) -> Unit>? = null
   var result: String? = null
 
   private fun getSecurityType(context: Context): String {
@@ -156,18 +156,14 @@ object SecurityService {
     fifoQueue?.clear()
   }
 
-  private fun dispatchResult(callback: (title: String, message: String) -> Unit) {
+  private fun dispatchResult(callback: (type: String, title: String, message: String) -> Unit) {
     result?.let {
-      if (it == SecurityType.NONE) {
-        callback("", "")
-        return
-      }
       val (title, message) = getTitleAndMessageForSecurityType(it)
-      callback(title, message)
+      callback(it, title, message)
     }
   }
 
-  private fun isSecurityJobRunning(callback: (title: String, message: String) -> Unit): Boolean {
+  private fun isSecurityJobRunning(callback: (type: String, title: String, message: String) -> Unit): Boolean {
     if (securityJob != null) {
       if (result.isNullOrEmpty()) {
         // result is not computed yet
@@ -198,11 +194,12 @@ object SecurityService {
     cleanUp()
   }
 
+  // type -> xbrf
   // title -> ymwnf
   // message -> tkxwdif
   fun checkAndBlockHacker(
     activityContext: Activity,
-    callback: (ymwnf: String, tkxwdif: String) -> Unit
+    callback: (xbrf: String, ymwnf: String, tkxwdif: String) -> Unit
   ) {
     if (isSecurityJobRunning(callback)) {
       return
