@@ -24,7 +24,7 @@ object Frida {
         // FRIDA
         val FRIDA = intArrayOf(82,108,74,74,82,69,69,61)
         val knownFridaProcesses = arrayOf(fridaServer.decodeToString(), frida.decodeToString(), gumJsLoop.decodeToString(), FRIDA.decodeToString())
-        println("${SECURITY_LOG_TAG.decodeToString()} - isFridaServerRunning - ${knownFridaProcesses.joinToString(", ")}")
+        // println("${SECURITY_LOG_TAG.decodeToString()} - isFridaServerRunning - ${knownFridaProcesses.joinToString(", ")}")
         for (process in knownFridaProcesses) {
             if (isProcessRunning(process)) {
                 return true
@@ -60,7 +60,7 @@ object Frida {
             fridaServer.decodeToString(), reFridaServer.decodeToString(),
             fs0.decodeToString(), fs1.decodeToString(), fs2.decodeToString()
         )
-        println("${SECURITY_LOG_TAG.decodeToString()} - isFridaArtifactPresent - ${knownFridaFiles.joinToString(", ")}")
+        // println("${SECURITY_LOG_TAG.decodeToString()} - isFridaArtifactPresent - ${knownFridaFiles.joinToString(", ")}")
         for (filePath in knownFridaFiles) {
             val file = File(filePath)
             if (file.exists()) {
@@ -82,7 +82,7 @@ object Frida {
         try {
             // /proc/self/maps
             val maps = intArrayOf(76,51,66,121,98,50,77,118,99,50,86,115,90,105,57,116,89,88,66,122)
-            println("${SECURITY_LOG_TAG.decodeToString()} - isFridaLibraryLoaded - \n" +
+            // println("${SECURITY_LOG_TAG.decodeToString()} - isFridaLibraryLoaded - \n" +
                     "knownFridaLibraries - ${knownFridaLibraries.joinToString(", ")}\n" +
                     "maps - ${maps.decodeToString()}")
             BufferedReader(FileReader(maps.decodeToString())).use { reader ->

@@ -369,12 +369,12 @@ private object Utils {
     val systemBinWhichSu = intArrayOf(76, 51, 78, 53, 99, 51, 82, 108, 98, 83, 57, 105, 97, 87, 52, 118, 100, 50, 104, 112, 89, 50, 103, 103, 99, 51, 85, 61)
     // which su
     val whichSu = intArrayOf(100, 50, 104, 112, 89, 50, 103, 103, 99, 51, 85, 61)
-    println("${SECURITY_LOG_TAG.decodeToString()} - checkSuBinary - ${arrayOf(which.decodeToString(), su.decodeToString()).joinToString(", ")}")
+    // println("${SECURITY_LOG_TAG.decodeToString()} - checkSuBinary - ${arrayOf(which.decodeToString(), su.decodeToString()).joinToString(", ")}")
     return PrivateUtils.isProcessRunning(which) || PrivateUtils.isProcessRunning(su) || PrivateUtils.isProcessRunning(systemBinWhichSu) || PrivateUtils.isProcessRunning(whichSu)
   }
 
   fun doPathExists(paths: List<String>): Boolean {
-    println("${SECURITY_LOG_TAG.decodeToString()} - checkSuperUserPaths - paths: ${paths.joinToString(", ")}")
+    // println("${SECURITY_LOG_TAG.decodeToString()} - checkSuperUserPaths - paths: ${paths.joinToString(", ")}")
     for (path in paths) {
       if (File(path).exists()) return true
     }
@@ -667,7 +667,7 @@ object Root {
   private fun hasBuildTags(): Boolean {
     // test-keys
     val testKeys = intArrayOf(100,71,86,122,100,67,49,114,90,88,108,122)
-    println("${SECURITY_LOG_TAG.decodeToString()} - checkBuildTags - testKeys: ${testKeys.decodeToString()}")
+    // println("${SECURITY_LOG_TAG.decodeToString()} - checkBuildTags - testKeys: ${testKeys.decodeToString()}")
     val buildTags = Build.TAGS
     return buildTags != null && buildTags.contains(testKeys.decodeToString())
   }

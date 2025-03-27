@@ -104,9 +104,7 @@ object SecurityService {
   }
 
   private fun getTitleAndMessageForSecurityType(type: String): Triple<String, String, Boolean> {
-    println(
-      "${SECURITY_LOG_TAG.decodeToString()} - getTitleAndMessageForSecurityType - type: $type"
-    )
+    // println("${SECURITY_LOG_TAG.decodeToString()} - getTitleAndMessageForSecurityType - type: $type")
     return when (type) {
       SecurityType.DEVELOPER_OPTIONS -> Triple(
         Obfuscation.DeveloperOptions.title,

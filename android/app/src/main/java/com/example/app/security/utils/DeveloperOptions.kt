@@ -19,7 +19,7 @@ object DeveloperOptions {
     }
     // eng
     val eng = intArrayOf(90, 87, 53, 110)
-    println("${SECURITY_LOG_TAG.decodeToString()} - DeveloperOptions - eng: ${eng.decodeToString()}")
+    // println("${SECURITY_LOG_TAG.decodeToString()} - DeveloperOptions - eng: ${eng.decodeToString()}")
     return Settings.Global.getInt(
       context.contentResolver,
       Settings.Global.ADB_ENABLED,
