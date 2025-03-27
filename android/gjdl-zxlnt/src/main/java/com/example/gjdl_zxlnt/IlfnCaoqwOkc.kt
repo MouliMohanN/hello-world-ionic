@@ -2,6 +2,27 @@ package com.example.gjdl_zxlnt
 
 import android.util.Base64
 
+private object WaveUtilsNativeLibConstants {
+  fun getLibraryName(): IntArray {
+    // wave_utils -> gjdl_zxlnt
+    return intArrayOf(90, 50, 112, 107, 98, 70, 57, 54, 101, 71, 120, 117, 100, 65, 61, 61)
+  }
+}
+
+private object WaveUtilsNativeLibUtils {
+  fun decodeToString(values: IntArray): String {
+    val base64String = values.map { it.toChar() }.joinToString("")
+    return Base64.decode(base64String, Base64.DEFAULT).decodeToString()
+  }
+}
+
+private object WaveUtilsNativeLib {
+  fun load() {
+    // wave_utils -> gjdl_zxlnt
+    System.loadLibrary(WaveUtilsNativeLibUtils.decodeToString(WaveUtilsNativeLibConstants.getLibraryName()))
+  }
+}
+
 // WaveUtilsLib
 class IlfnCaoqwOkc {
 
@@ -14,16 +35,8 @@ class IlfnCaoqwOkc {
 
     companion object {
         // Used to load the 'wave_utils' library on application startup.
-
-      private fun IntArray.decodeToString(): String {
-        val base64String = this.map { it.toChar() }.joinToString("")
-        return Base64.decode(base64String, Base64.DEFAULT).decodeToString()
-      }
-
         init {
-            // wave_utils -> gjdl_zxlnt
-            val waveUtilsString = intArrayOf(90, 50, 112, 107, 98, 70, 57, 54, 101, 71, 120, 117, 100, 65, 61, 61).decodeToString()
-            System.loadLibrary(waveUtilsString)
+          WaveUtilsNativeLib.load()
         }
     }
 }
