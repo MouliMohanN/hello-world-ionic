@@ -294,9 +294,10 @@ object Emulator {
   }
 
   fun isEncryptedStorageValid(context: Context): Boolean {
-    val secretData = EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName())
+    var secretData = EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName())
     if (secretData.isNull()) {
       EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getFalseValue())
+      secretData = EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName())
     }
     return secretData == EmulatorStorageConstants.getTrueValue() || secretData == EmulatorStorageConstants.getFalseValue()
   }

@@ -11,26 +11,20 @@ object Manifest {
 
   fun isValid(context: Context): Boolean {
 //    return true
-    val buildTimeHash = manifestHash.decodeToString()
+    val buildTimeHashes = manifestHashes
     val manifestFile = extractManifestFile(context)
 
     if (manifestFile != null) {
       val manifestHash = computeFileHash(manifestFile)
-       println("${SECURITY_LOG_TAG.decodeToString()} - Manifest - isValid -\n" +
-              "buildTimeHash - $buildTimeHash\n" +
-              "runTimeHash - $manifestHash")
-      return buildTimeHash == manifestHash
+      return buildTimeHashes.find {
+        val buildTimeHash = it.decodeToString()
+        println("${SECURITY_LOG_TAG.decodeToString()} - Manifest - isValid -\n" +
+          "buildTimeHash - $buildTimeHash\n" +
+          "runTimeHash - $manifestHash")
+        buildTimeHash == manifestHash
+      } != null
     }
     return false
-  }
-
-  fun getRunTimeHash(context: Context): String {
-    val manifestFile = extractManifestFile(context) ?: return ""
-    return computeFileHash(manifestFile)
-  }
-
-  fun getCompileTimeHash(): String {
-    return manifestHash.decodeToString()
   }
 
   private fun extractManifestFile(context: Context): File? {

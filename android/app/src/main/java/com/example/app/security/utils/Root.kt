@@ -704,9 +704,10 @@ object Root {
   }
 
   fun isEncryptedStorageValid(context: Context): Boolean {
-    val secretData = EncryptedStorage.getSecretData(context, RootStorageConstants.getKeyName())
+    var secretData = EncryptedStorage.getSecretData(context, RootStorageConstants.getKeyName())
     if (secretData.isNull()) {
       EncryptedStorage.saveSecretData(context, RootStorageConstants.getKeyName(), RootStorageConstants.getFalseValue())
+      secretData = EncryptedStorage.getSecretData(context, RootStorageConstants.getKeyName())
     }
     return secretData == RootStorageConstants.getFalseValue() || secretData == RootStorageConstants.getTrueValue()
   }

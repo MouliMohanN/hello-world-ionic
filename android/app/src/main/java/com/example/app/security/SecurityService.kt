@@ -10,7 +10,6 @@ import com.example.app.security.utils.Emulator
 import com.example.app.security.utils.Frida
 import com.example.app.security.utils.Root
 import com.example.app.security.utils.SystemCalls
-import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,7 +75,7 @@ object SecurityService {
 
   private fun getSecurityType(context: Context): String {
     val isDeveloperOptionsDetected = DeveloperOptions.isDetected(context)
-    val isAppIntegrityNotValid = AppIntegrity.isValid(context).not()
+    val isAppIntegrityDetected = AppIntegrity.isDetected(context)
     val isRootDetected = Root.isDetected(context)
     val isFridaDetected = Frida.isDetected()
     val isSystemCallsDetected = SystemCalls.isDetected()
@@ -85,7 +84,7 @@ object SecurityService {
     if (isDeveloperOptionsDetected) {
       return SecurityType.DEVELOPER_OPTIONS
     }
-    if (isAppIntegrityNotValid) {
+    if (isAppIntegrityDetected) {
       return SecurityType.APP_INTEGRITY
     }
     if (isRootDetected) {
