@@ -1,5 +1,6 @@
 
 import java.security.MessageDigest
+import java.util.zip.ZipFile
 
 apply plugin: 'com.android.application'
 
@@ -52,7 +53,27 @@ def getBuildDirectory() {
   return layout.buildDirectory.get().asFile
 }
 
-def generateManifestHash(manifestFile, outputDir) {
+def getManifestFileFromApkPath(String apkPath, File outputDir) {
+  def manifestFile = new File(outputDir, "AndroidManifest.xml")
+  def apkFile = file(apkPath)
+
+  if (!apkFile.exists()) {
+    println("APK not found at: ${apkPath}")
+    return
+  }
+
+  println("APK found at: ${apkPath}")
+
+  // Extract the binary AndroidManifest.xml from the APK
+  ant.unzip(src: apkPath, dest: outputDir) {
+    patternset {
+      include(name: "AndroidManifest.xml")
+    }
+  }
+  return manifestFile
+}
+
+def getGeneratedManifestHash(File manifestFile) {
   if (manifestFile.exists()) {
     // Compute the hash of the binary file
     def digest = MessageDigest.getInstance("SHA-256")
@@ -65,20 +86,42 @@ def generateManifestHash(manifestFile, outputDir) {
     }
     def manifestHash = digest.digest().collect { String.format("%02x", it) }.join("")
     println("Binary AndroidManifest.xml Hash: ${manifestHash}")
-
-    // Optionally save the hash to a file
-    def hashFile = new File(outputDir, "manifest_hash.txt")
-    hashFile.text = manifestHash
-    println("Hash saved to ${hashFile.path}")
+    return manifestHash
   } else {
     println("Binary AndroidManifest.xml not found at path: ${manifestFile.path}")
   }
+}
+
+def saveManifestHashToFile(List<String> manifestHashes, File outputDir) {
+  def outputFile = new File(outputDir, "manifest_hashes.txt")
+  outputFile.write(manifestHashes.join("\n"))
+  println("Manifest hashes saved to: ${outputFile.path}")
 }
 
 def getManifestHashOutputDir() {
   def outputDir = file("${getBuildDirectory()}/outputs/extracted_manifest")
   outputDir.mkdirs()
   return outputDir
+}
+
+def computeManifestHashForAllApksInDirectory(File apksDir) {
+  def manifestHashes = [] as ArrayList<String>
+  def outputDir = getManifestHashOutputDir()
+
+  apksDir.eachFile { apkFile ->
+    if (apkFile.name.startsWith("base-master")) {
+      def apkPath = apkFile.path
+      def manifestFile = getManifestFileFromApkPath(apkPath, outputDir)
+      if (manifestFile != null && manifestFile.exists()) {
+        def manifestHash = getGeneratedManifestHash(manifestFile)
+        if (!manifestHashes.contains(manifestHash)) {
+          manifestHashes.add(manifestHash)
+        }
+        manifestFile.delete() // Delete the manifest file after processing
+      }
+    }
+  }
+  saveManifestHashToFile(manifestHashes, outputDir)
 }
 
 // Dynamically create tasks for each variant
@@ -91,26 +134,18 @@ android.applicationVariants.all { variant ->
 
     doLast {
 //      def apkPath = "${getBuildDirectory()}/outputs/apk/${variantName}/app-${variantName}.apk" // Replace with your APK path
-      def apkPath = "${getBuildDirectory()}/outputs/bundle/debug/app-debug1/splits/base-master_3.apk"
+      def manifestHashes = [] as ArrayList<String>
       def outputDir = getManifestHashOutputDir()
 
-      def manifestFile = new File(outputDir, "AndroidManifest.xml")
-      def apkFile = file(apkPath)
-
-      if (!apkFile.exists()) {
-        println("APK not found at: ${apkPath}")
-        return
-      }
-
-      println("APK found at: ${apkPath}")
-
-      // Extract the binary AndroidManifest.xml from the APK
-      ant.unzip(src: apkPath, dest: outputDir) {
-        patternset {
-          include(name: "AndroidManifest.xml")
+      def manifestFile = getManifestFileFromApkPath(apkPath, outputDir)
+      if (manifestFile != null && manifestFile.exists()) {
+        def manifestHash = getGeneratedManifestHash(manifestFile)
+        if (!manifestHashes.contains(manifestHash)) {
+          manifestHashes.add(manifestHash)
         }
+        manifestFile.delete() // Delete the manifest file after processing
       }
-      generateManifestHash(manifestFile, outputDir)
+      saveManifestHashToFile(manifestHashes, outputDir)
     }
   }
 
@@ -127,6 +162,13 @@ tasks.configureEach { task ->
   }
 }
 
+tasks.register('hashManifestBundleDebug_Test') {
+  doLast {
+    def apksDir = new File("${getBuildDirectory()}/outputs/bundle/debug/app-debug1/splits")
+    computeManifestHashForAllApksInDirectory(apksDir)
+  }
+}
+
 tasks.register('hashManifestBundleDebug') {
   doLast {
     def manifestFile = file("${getBuildDirectory()}/intermediates/bundle_manifest/debug/processApplicationManifestDebugForBundle/AndroidManifest.xml")
@@ -137,7 +179,10 @@ tasks.register('hashManifestBundleDebug') {
 //      into outputDir
 //      rename { "AndroidManifest.xml" }
 //    }
-    generateManifestHash(destinationFile, outputDir)
+    def manifestHash = getGeneratedManifestHash(destinationFile)
+    ArrayList<String> manifestHashes = new ArrayList<String>()
+    manifestHashes.add(manifestHash)
+    saveManifestHashToFile(manifestHashes, outputDir)
 //    def manifestFileUniversal = file("${outputDir}/AndroidManifestUniversalApk.xml")
 //    generateManifestHash(manifestFileUniversal, outputDir)
 //    def manifestFileBaseMaster = file("${outputDir}/AndroidManifestBaseMasterApk.xml")
@@ -155,7 +200,10 @@ tasks.register('hashManifestBundleRelease') {
       into outputDir
       rename { "AndroidManifest.xml" }
     }
-    generateManifestHash(manifestFile, outputDir)
+    def manifestHash = getGeneratedManifestHash(destinationFile)
+    ArrayList<String> manifestHashes = new ArrayList<String>()
+    manifestHashes.add(manifestHash)
+    saveManifestHashToFile(manifestHashes, outputDir)
   }
 }
 
