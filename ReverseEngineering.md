@@ -93,6 +93,26 @@ Go to the folder you want to copy the apk on the computer
 - adb shell netstat -tulpn
 ```
 
+- Extract apk from bundle
+```bash
+java -jar C:/Users/FCI/Downloads/bundletool_all_1_18_1.jar build-apks --bundle=C:/mouli/ionic/hello-world-ionic/android/app/build/outputs/bundle/debug/app-debug.aab --output=C:/mouli/ionic/hello-world-ionic/android/app/build/outputs/bundle/debug/app-debug.apks
+```
+
+- Extract apk from bundle for connected device
+```bash
+java -jar C:/Users/FCI/Downloads/bundletool_all_1_18_1.jar build-apks --bundle=C:/mouli/ionic/hello-world-ionic/android/app/build/outputs/bundle/debug/app-debug.aab --output=C:/mouli/ionic/hello-world-ionic/android/app/build/outputs/bundle/debug/app-debug.apks --connected-device
+```
+
+- Install apk from bundle for connected device
+```bash
+java -jar C:/Users/FCI/Downloads/bundletool_all_1_18_1.jar install-apks --apks=C:/mouli/ionic/hello-world-ionic/android/app/build/outputs/bundle/debug/app-debug.apks --device-id=adb-RZCY11ND0CZ-B1DvSz._adb-tls-connect._tcp
+
+// adb-RZCY11ND0CZ-B1DvSz._adb-tls-connect._tcp
+// LGK5203fe0e917
+```
+
+
+
 ## References
 
 - [Youtube, Android Reversing #1](https://youtu.be/uc7eZGE07ps?si=cuH9eJsH1VEYbKN1) - Follow up #2, #3 and other videos on the channel

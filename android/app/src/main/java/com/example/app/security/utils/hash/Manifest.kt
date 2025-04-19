@@ -10,18 +10,18 @@ import java.util.zip.ZipFile
 object Manifest {
 
   fun isValid(context: Context): Boolean {
-    return true
-   /* val buildTimeHash = manifestHash.decodeToString()
+//    return true
+    val buildTimeHash = manifestHash.decodeToString()
     val manifestFile = extractManifestFile(context)
 
     if (manifestFile != null) {
       val manifestHash = computeFileHash(manifestFile)
-      // println("${SECURITY_LOG_TAG.decodeToString()} - Manifest - isValid -\n" +
+       println("${SECURITY_LOG_TAG.decodeToString()} - Manifest - isValid -\n" +
               "buildTimeHash - $buildTimeHash\n" +
               "runTimeHash - $manifestHash")
       return buildTimeHash == manifestHash
     }
-    return false*/
+    return false
   }
 
   fun getRunTimeHash(context: Context): String {

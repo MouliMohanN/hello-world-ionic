@@ -25,6 +25,13 @@ android {
         }
     }
     buildTypes {
+      debug {
+        // Debug variant configuration
+        debuggable true
+        minifyEnabled false
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      }
+
         release {
           minifyEnabled enableProguardInReleaseBuilds
           shrinkResources enableProguardInReleaseBuilds
@@ -32,40 +39,67 @@ android {
           proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    bundle {
+        language {
+            enableSplit = true
+        }
+    }
 }
 
 
 // Helper function to calculate a file's hash
-def computeFileHash(file) {
-  def digest = MessageDigest.getInstance("SHA-256")
-  file.withInputStream { inputStream ->
-    def buffer = new byte[8192]
-    def bytesRead
-    while ((bytesRead = inputStream.read(buffer)) != -1) {
-      digest.update(buffer, 0, bytesRead)
+def getBuildDirectory() {
+  return layout.buildDirectory.get().asFile
+}
+
+def generateManifestHash(manifestFile, outputDir) {
+  if (manifestFile.exists()) {
+    // Compute the hash of the binary file
+    def digest = MessageDigest.getInstance("SHA-256")
+    manifestFile.withInputStream { input ->
+      byte[] buffer = new byte[8192]
+      int bytesRead
+      while ((bytesRead = input.read(buffer)) != -1) {
+        digest.update(buffer, 0, bytesRead)
+      }
     }
+    def manifestHash = digest.digest().collect { String.format("%02x", it) }.join("")
+    println("Binary AndroidManifest.xml Hash: ${manifestHash}")
+
+    // Optionally save the hash to a file
+    def hashFile = new File(outputDir, "manifest_hash.txt")
+    hashFile.text = manifestHash
+    println("Hash saved to ${hashFile.path}")
+  } else {
+    println("Binary AndroidManifest.xml not found at path: ${manifestFile.path}")
   }
-  return digest.digest().collect { String.format("%02x", it) }.join("")
+}
+
+def getManifestHashOutputDir() {
+  def outputDir = file("${getBuildDirectory()}/outputs/extracted_manifest")
+  outputDir.mkdirs()
+  return outputDir
 }
 
 // Dynamically create tasks for each variant
 android.applicationVariants.all { variant ->
   def variantName = variant.name // e.g., debug, release
 
-  task "hashManifest${variantName.capitalize()}" {
+  task "hashManifestApk${variantName.capitalize()}" {
     group = "verification" // Optional: Group in Gradle task list
     description = "Compute hash for AndroidManifest.xml for ${variantName} variant"
 
     doLast {
-      def apkPath = "${buildDir}/outputs/apk/${variantName}/app-${variantName}.apk" // Replace with your APK path
-      def outputDir = file("${buildDir}/outputs/extracted_manifest")
-      outputDir.mkdirs()
+//      def apkPath = "${getBuildDirectory()}/outputs/apk/${variantName}/app-${variantName}.apk" // Replace with your APK path
+      def apkPath = "${getBuildDirectory()}/outputs/bundle/debug/app-debug1/splits/base-master_3.apk"
+      def outputDir = getManifestHashOutputDir()
 
       def manifestFile = new File(outputDir, "AndroidManifest.xml")
       def apkFile = file(apkPath)
 
       if (!apkFile.exists()) {
-        throw new GradleException("APK file not found at: ${apkPath}")
+        println("APK not found at: ${apkPath}")
+        return
       }
 
       println("APK found at: ${apkPath}")
@@ -76,32 +110,53 @@ android.applicationVariants.all { variant ->
           include(name: "AndroidManifest.xml")
         }
       }
-
-      if (manifestFile.exists()) {
-        // Compute the hash of the binary file
-        def digest = MessageDigest.getInstance("SHA-256")
-        manifestFile.withInputStream { input ->
-          byte[] buffer = new byte[8192]
-          int bytesRead
-          while ((bytesRead = input.read(buffer)) != -1) {
-            digest.update(buffer, 0, bytesRead)
-          }
-        }
-        def manifestHash = digest.digest().collect { String.format("%02x", it) }.join("")
-        println("Binary AndroidManifest.xml Hash: ${manifestHash}")
-
-        // Optionally save the hash to a file
-        def hashFile = new File(outputDir, "manifest_hash.txt")
-        hashFile.text = manifestHash
-        println("Hash saved to ${hashFile.path}")
-      } else {
-        println("Binary AndroidManifest.xml not found in the APK.")
-      }
+      generateManifestHash(manifestFile, outputDir)
     }
   }
 
   // Optionally, run this task after the variant is assembled
-  tasks["assemble${variantName.capitalize()}"].finalizedBy("hashManifest${variantName.capitalize()}")
+  tasks["assemble${variantName.capitalize()}"].finalizedBy("hashManifestApk${variantName.capitalize()}")
+}
+
+tasks.configureEach { task ->
+  if (task.name == "bundleDebug") {
+    task.finalizedBy("hashManifestBundleDebug")
+  }
+  if (task.name == "bundleRelease") {
+    task.finalizedBy("hashManifestBundleRelease")
+  }
+}
+
+tasks.register('hashManifestBundleDebug') {
+  doLast {
+    def manifestFile = file("${getBuildDirectory()}/intermediates/bundle_manifest/debug/processApplicationManifestDebugForBundle/AndroidManifest.xml")
+    def outputDir = getManifestHashOutputDir()
+    def destinationFile = new File(outputDir, "AndroidManifest.xml")
+//    copy {
+//      from manifestFile
+//      into outputDir
+//      rename { "AndroidManifest.xml" }
+//    }
+    generateManifestHash(destinationFile, outputDir)
+//    def manifestFileUniversal = file("${outputDir}/AndroidManifestUniversalApk.xml")
+//    generateManifestHash(manifestFileUniversal, outputDir)
+//    def manifestFileBaseMaster = file("${outputDir}/AndroidManifestBaseMasterApk.xml")
+//    generateManifestHash(manifestFileBaseMaster, outputDir)
+  }
+}
+
+tasks.register('hashManifestBundleRelease') {
+  doLast {
+    def manifestFile = file("${getBuildDirectory()}/intermediates/bundle_manifest/release/processApplicationManifestReleaseForBundle/AndroidManifest.xml")
+    def outputDir = getManifestHashOutputDir()
+    def destinationFile = new File(outputDir, "AndroidManifest.xml")
+    copy {
+      from manifestFile
+      into outputDir
+      rename { "AndroidManifest.xml" }
+    }
+    generateManifestHash(manifestFile, outputDir)
+  }
 }
 
 tasks.withType(JavaCompile).configureEach {
