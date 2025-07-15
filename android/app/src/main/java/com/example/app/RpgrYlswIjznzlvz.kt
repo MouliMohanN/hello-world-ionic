@@ -18,6 +18,20 @@ abstract class RpgrYlswIjznzlvz: BridgeActivity() {
     plugins.add(GrofbrbfVqyjko::class.java)
     registerPlugins(plugins)
     super.onCreate(savedInstanceState)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    gqTebsoeosVzvszCaYlswIjznzlvz()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+      window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    } else {
+      setRecentsScreenshotEnabled(true)
+    }
+  }
+
+  override fun onPause() {
+    super.onPause()
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
       window.setFlags(
         WindowManager.LayoutParams.FLAG_SECURE,
@@ -26,10 +40,5 @@ abstract class RpgrYlswIjznzlvz: BridgeActivity() {
     } else {
       setRecentsScreenshotEnabled(false)
     }
-  }
-
-  override fun onResume() {
-    super.onResume()
-    gqTebsoeosVzvszCaYlswIjznzlvz()
   }
 }
