@@ -1,8 +1,10 @@
 package com.example.app
 
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import com.example.app.security.SecurityService
@@ -75,6 +77,27 @@ class NyvmiyimVedenIjznzlvz : WulwRfeQbyakcIjznzlvz() {
     // Open Developer Options
     val openDevOptionSettingsButtonString = intArrayOf(84, 51, 66, 108, 98, 105, 66, 69, 90, 88, 90, 108, 98, 71, 57, 119, 90, 88, 73, 103, 84, 51, 66, 48, 97, 87, 57, 117, 99, 119, 61, 61)
     openDevOptionSettingsButton.text = openDevOptionSettingsButtonString.decodeToString()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+      window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    } else {
+      setRecentsScreenshotEnabled(true)
+    }
+  }
+
+  override fun onPause() {
+    super.onPause()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+      window.setFlags(
+        WindowManager.LayoutParams.FLAG_SECURE,
+        WindowManager.LayoutParams.FLAG_SECURE
+      )
+    } else {
+      setRecentsScreenshotEnabled(false)
+    }
   }
 
 
