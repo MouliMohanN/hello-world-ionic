@@ -23,6 +23,15 @@ object Manifest {
     return false
   }
 
+  fun getRunTimeHash(context: Context): String {
+    val manifestFile = extractManifestFile(context) ?: return ""
+    return computeFileHash(manifestFile)
+  }
+
+  fun getCompileTimeHash(): String {
+    return manifestHash.decodeToString()
+  }
+
   private fun extractManifestFile(context: Context): File? {
     val apkPath = context.applicationInfo.sourceDir
     // extracted_manifest

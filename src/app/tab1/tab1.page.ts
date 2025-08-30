@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
-import Security from 'src/plugins/securityPlugin';
 import {  CommonModule } from '@angular/common';
+import SecurityPlugin from 'src/plugins/securityPlugin';
 
 @Component({
   selector: 'app-tab1',
@@ -23,19 +23,19 @@ export class Tab1Page {
 
   async onButtonPress() {
     console.log('button pressed');
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 30)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 60)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 90)
-    setTimeout(() => {
-      Security.isAppSecure()
-    }, 120)
-    const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await Security.isAppSecure();
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 30)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 60)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 90)
+    // setTimeout(() => {
+    //   Security.isAppSecure()
+    // }, 120)
+    const { isSecure: isAppSecure, title: alertTitle, message: alertDescription } = await SecurityPlugin.isAppSecure();
     // const isAppSecure = true
     // const alertTitle = 'Title'
     // const alertDescription = 'Desc'

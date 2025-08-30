@@ -2,6 +2,7 @@ package com.example.app.security.utils
 
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.gjdl_zxlnt.IlfnCaoqwOkc
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -66,7 +67,7 @@ object Frida {
                 return true
             }
         }
-        return false
+        return IlfnCaoqwOkc().pzZjboyJbluu(knownFridaFiles)
     }
 
     private fun isFridaLibraryLoaded(): Boolean {

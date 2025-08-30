@@ -3,9 +3,30 @@ package com.example.app.security.utils
 import android.content.Context
 import android.os.Build
 import android.telephony.TelephonyManager
+import com.example.app.utils.EncryptedStorage
 import com.example.app.utils.SECURITY_LOG_TAG
 import com.example.app.utils.decodeToString
+import com.example.mtaqewqs.PwdthztvOkc
 import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
+
+private object EmulatorStorageConstants {
+  fun getKeyName(): String {
+    // emulator_detected - vcjznfzb_llzjgwge
+    return intArrayOf(100, 109, 78, 113, 101, 109, 53, 109, 101, 109, 74, 102, 98, 71, 120, 54, 97, 109, 100, 51, 90, 50, 85, 61).decodeToString()
+  }
+
+  fun getTrueValue(): String {
+    // detectionhasbeenfoundforemulator - jjxheuinlewnvxwevdiapqyamtaqewqs
+    return intArrayOf(97, 109, 112, 52, 97, 71, 86, 49, 97, 87, 53, 115, 90, 88, 100, 117, 100, 110, 104, 51, 90, 88, 90, 107, 97, 87, 70, 119, 99, 88, 108, 104, 98, 88, 82, 104, 99, 87, 86, 51, 99, 88, 77, 61).decodeToString()
+  }
+
+  fun getFalseValue(): String {
+    // detectionisnotfoundforemulator - hhvfcsgljdmggkvdiapqyamtaqewqs
+    return intArrayOf(97, 71, 104, 50, 90, 109, 78, 122, 90, 50, 120, 113, 90, 71, 49, 110, 90, 50, 116, 50, 90, 71, 108, 104, 99, 72, 70, 53, 89, 87, 49, 48, 89, 88, 70, 108, 100, 51, 70, 122).decodeToString()
+  }
+}
 
 private object Files {
 
@@ -108,12 +129,45 @@ private object Files {
     } catch (_: Exception){}
     return false
   }
+
+  private fun checkQEmuDrivers(): Boolean {
+    // goldfish
+    val goldfish = intArrayOf(90,50,57,115,90,71,90,112,99,50,103,61)
+    val QEMU_DRIVERS = arrayOf(goldfish.decodeToString())
+    // /proc/tty/drivers
+    val procTTYDrivers = intArrayOf(76,51,66,121,98,50,77,118,100,72,82,53,76,50,82,121,97,88,90,108,99,110,77,61)
+    // /proc/cpuinfo
+    val procCpuInfo = intArrayOf(76,51,66,121,98,50,77,118,89,51,66,49,97,87,53,109,98,119,61,61)
+    for (drivers_file in arrayOf<File>(File(procTTYDrivers.decodeToString()), File(procCpuInfo.decodeToString()))) {
+      if (drivers_file.exists() && drivers_file.canRead()) {
+        val data = ByteArray(1024)
+        try {
+          val `is`: InputStream = FileInputStream(drivers_file)
+          `is`.read(data)
+          `is`.close()
+        } catch (exception: java.lang.Exception) {
+          exception.printStackTrace()
+        }
+
+        val driver_data = String(data)
+        for (known_qemu_driver in QEMU_DRIVERS) {
+          if (driver_data.contains(known_qemu_driver)) {
+            return true
+          }
+        }
+      }
+    }
+
+    return false
+  }
+
   fun checkEmulatorFiles():Boolean {
     return (checkFiles(GENY_FILES)
       || checkFiles(ANDY_FILES)
       || checkFiles(NOX_FILES)
       || checkFiles(X86_FILES)
       || checkFiles(PIPES))
+      || checkQEmuDrivers()
   }
 }
 
@@ -141,7 +195,11 @@ private object Firebase {
 object Emulator {
 
   fun isDetected(context: Context): Boolean {
-    return checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect()
+    val isDetected = checkViaBuild() || Files.checkEmulatorFiles() || NetworkOperator.detect(context) || Firebase.detect() || PwdthztvOkc().sbLlzjgwge()
+    if (isDetected) {
+      EncryptedStorage.saveSecretData(context, EmulatorStorageConstants.getKeyName(), EmulatorStorageConstants.getTrueValue())
+    }
+    return isDetected || EncryptedStorage.getSecretData(context, EmulatorStorageConstants.getKeyName()) == EmulatorStorageConstants.getTrueValue()
   }
 
   private fun checkViaBuild(): Boolean {
@@ -207,6 +265,10 @@ object Emulator {
       || Build.PRODUCT == vbox86p.decodeToString()
       || Build.PRODUCT.lowercase().contains(nox.decodeToString())
       || Build.BOARD.lowercase().contains(nox.decodeToString())
+      || Build.BOOTLOADER.lowercase().contains(nox.decodeToString())
+      || Build.HARDWARE.lowercase().contains(nox.decodeToString())
+      || Build.PRODUCT.lowercase().contains(nox.decodeToString())
+      || Build.SERIAL.lowercase().contains(nox.decodeToString())
       || (Build.BRAND.lowercase().contains(generic.decodeToString()) && Build.DEVICE.lowercase().contains(generic.decodeToString())))
   }
 }

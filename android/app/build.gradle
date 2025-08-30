@@ -3,6 +3,11 @@ import java.security.MessageDigest
 
 apply plugin: 'com.android.application'
 
+/**
+ * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ */
+def enableProguardInReleaseBuilds = true
+
 android {
     namespace "com.example.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -21,8 +26,10 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+          minifyEnabled enableProguardInReleaseBuilds
+          shrinkResources enableProguardInReleaseBuilds
+          crunchPngs false // change to true to optimize pngs
+          proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 }
@@ -114,9 +121,13 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    implementation "com.google.crypto.tink:tink-android:1.9.0"
 
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation project(':capacitor-android')
+    implementation project(":mtaqewqs")
+    implementation project(":gjdl-zxlnt")
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
